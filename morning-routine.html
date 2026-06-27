@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morning Routine — Full Body</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --ink: #0c1014;
+    --panel: #141a21;
+    --panel-2: #1c242e;
+    --line: #2a333f;
+    --fog: #8a97a6;
+    --chalk: #f2f5f8;
+    --sweat: #d6ff3f;     /* acide, énergie matin */
+    --sweat-dim: #aacb1f;
+    --burn: #ff6b3d;
+    --rest: #3fa0ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--chalk);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    padding: 0 16px 80px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; width: 100%; }
+
+  /* HEADER */
+  header {
+    padding: 40px 0 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 13px;
+    color: var(--sweat-dim);
+  }
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 9vw, 64px);
+    line-height: 0.95;
+    text-transform: uppercase;
+    margin: 6px 0 14px;
+  }
+  h1 span { color: var(--sweat); }
+  .sub { color: var(--fog); font-size: 15px; max-width: 52ch; }
+
+  /* KIT BAR */
+  .kit {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 22px;
+  }
+  .chip {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 14px; letter-spacing: 0.04em;
+    background: var(--panel-2); border: 1px solid var(--line);
+    padding: 5px 11px; border-radius: 2px; color: var(--fog);
+  }
+
+  /* CONTROL ROW */
+  .controls {
+    display: flex; align-items: center; gap: 14px;
+    margin: 26px 0 8px; flex-wrap: wrap;
+  }
+  .progress-track {
+    flex: 1; min-width: 180px; height: 6px;
+    background: var(--panel-2); border-radius: 99px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: var(--sweat); transition: width 0.3s ease;
+  }
+  .progress-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 18px; letter-spacing: 0.05em;
+  }
+  .reset {
+    background: none; border: 1px solid var(--line); color: var(--fog);
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; font-size: 13px;
+    padding: 6px 12px; border-radius: 2px; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .reset:hover { color: var(--chalk); border-color: var(--fog); }
+
+  /* BLOCK */
+  .block { margin-top: 34px; }
+  .block-head {
+    display: flex; align-items: baseline; gap: 12px;
+    padding-bottom: 10px; margin-bottom: 4px;
+    border-bottom: 2px solid var(--line);
+  }
+  .block-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 15px;
+    color: var(--ink); background: var(--sweat);
+    padding: 1px 8px; border-radius: 2px;
+  }
+  .block-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 24px; text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .block-meta { margin-left: auto; color: var(--fog); font-size: 13px; }
+
+  /* EXERCISE */
+  .ex {
+    display: grid; grid-template-columns: 38px 1fr auto;
+    gap: 14px; align-items: center;
+    padding: 16px 4px; border-bottom: 1px solid var(--line);
+    cursor: pointer; transition: opacity 0.2s;
+    max-width: 100%;
+  }
+  .ex:last-child { border-bottom: none; }
+  .tick {
+    width: 26px; height: 26px; border: 2px solid var(--line);
+    border-radius: 50%; display: grid; place-items: center;
+    transition: all 0.18s; flex-shrink: 0;
+  }
+  .ex.done .tick { background: var(--sweat); border-color: var(--sweat); }
+  .tick svg { width: 14px; height: 14px; stroke: var(--ink); stroke-width: 3.5;
+    fill: none; opacity: 0; transition: opacity 0.18s; }
+  .ex.done .tick svg { opacity: 1; }
+  .ex.done .ex-name { color: var(--fog); text-decoration: line-through; text-decoration-color: var(--sweat-dim); }
+
+  .ex-body { min-width: 0; }
+  .ex-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 20px; letter-spacing: 0.01em;
+    line-height: 1.1;
+  }
+  .ex-cue { color: var(--fog); font-size: 13px; margin-top: 2px; }
+  .ex-toggle {
+    background: none; border: none; cursor: pointer;
+    color: var(--rest); font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 14px; letter-spacing: 0.05em;
+    padding: 4px 0; margin-top: 3px; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .ex-toggle .caret { transition: transform 0.2s; display: inline-block; }
+  .ex-toggle.open .caret { transform: rotate(90deg); }
+  .ex-steps {
+    display: none; margin-top: 8px; padding: 12px 14px;
+    background: var(--ink); border: 1px solid var(--line);
+    border-radius: 3px;
+  }
+  .ex-steps.open { display: block; }
+  .ex-steps p { font-size: 13.5px; color: var(--fog); line-height: 1.55; }
+  .ex-steps p + p { margin-top: 8px; }
+  .ex-steps b { color: var(--chalk); font-weight: 600; }
+  .ex-target {
+    font-weight: 600; font-size: 12px; color: var(--sweat-dim);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-top: 5px;
+  }
+
+  .ex-load { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+  .ex-prescrip {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 22px; white-space: nowrap;
+  }
+  .timer-btn {
+    margin-top: 5px;
+    background: var(--panel-2); border: 1px solid var(--line);
+    color: var(--rest); font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 13px; letter-spacing: 0.06em;
+    padding: 4px 9px; border-radius: 2px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .timer-btn:hover { border-color: var(--rest); }
+  .load-pick {
+    margin-top: 5px;
+    background: var(--panel-2); border: 1px solid var(--line);
+    color: var(--chalk); font-family: 'Inter', sans-serif;
+    font-size: 13px; padding: 4px 6px; border-radius: 2px; cursor: pointer;
+  }
+
+  /* FOOTER NOTE */
+  .note {
+    margin-top: 40px; padding: 20px; background: var(--panel);
+    border-left: 3px solid var(--burn); border-radius: 2px;
+  }
+  .note h3 {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: 16px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--burn); margin-bottom: 8px;
+  }
+  .note p { font-size: 14px; color: var(--fog); }
+  .note strong { color: var(--chalk); font-weight: 600; }
+
+  /* TIMER OVERLAY */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(8,11,14,0.94);
+    display: none; place-items: center; z-index: 50;
+    backdrop-filter: blur(4px);
+  }
+  .overlay.on { display: grid; }
+  .timer-card { text-align: center; }
+  .timer-ex {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--sweat);
+    font-size: 18px; margin-bottom: 8px;
+  }
+  .timer-clock {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: clamp(90px, 30vw, 180px); line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .timer-actions { margin-top: 24px; display: flex; gap: 12px; justify-content: center; }
+  .timer-actions button {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; font-size: 16px;
+    padding: 10px 24px; border-radius: 2px; cursor: pointer; border: none;
+  }
+  .btn-stop { background: var(--panel-2); color: var(--chalk); border: 1px solid var(--line); }
+  .btn-go { background: var(--sweat); color: var(--ink); }
+
+  @media (max-width: 520px) {
+    .ex { grid-template-columns: 30px 1fr; }
+    .ex-load { grid-column: 2; text-align: left; margin-top: 4px;
+      display: flex; gap: 8px; align-items: center; }
+    .ex-prescrip { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Routine matinale · ~15 min · 2 tours</div>
+    <h1>Réveille la <span>machine</span></h1>
+    <p class="sub">Circuit full-body avec charge. Enchaîne en gardant un repos court entre exercices, ~60-90s entre les tours. Coche au fur et à mesure.</p>
+    <div class="kit">
+      <span class="chip">Swiss ball</span>
+      <span class="chip">Haltères 3→24 kg</span>
+      <span class="chip">Barre de traction</span>
+      <span class="chip">Élastiques</span>
+      <span class="chip">Poids du corps</span>
+    </div>
+    <div class="controls">
+      <span class="progress-label" id="pct">0%</span>
+      <div class="progress-track"><div class="progress-fill" id="fill"></div></div>
+      <button class="reset" id="reset">Reset</button>
+    </div>
+  </header>
+
+  <!-- Blocks injected here -->
+  <div id="blocks"></div>
+
+  <div class="note">
+    <h3>Comment l'utiliser</h3>
+    <p>Tape sur un exercice pour le <strong>cocher</strong>. « Voir la technique » déplie le pas-à-pas. Le bouton bleu lance un <strong>chrono plein écran</strong> pour les exercices tenus. Pour les haltères, choisis ta charge — les suggestions sont des points de départ, ajuste pour finir chaque série proche de l'échec technique (1-2 reps en réserve).</p>
+  </div>
+</div>
+
+<!-- TIMER OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="timer-card">
+    <div class="timer-ex" id="t-ex">Planche</div>
+    <div class="timer-clock" id="t-clock">0:45</div>
+    <div class="timer-actions">
+      <button class="btn-stop" id="t-stop">Stop</button>
+      <button class="btn-go" id="t-restart">Relancer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const WEIGHTS = [3, 8, 11, 14, 19.5, 24];
+
+const PLAN = [
+  { block: "A", title: "Activation core", meta: "Swiss ball · gainage profond", ex: [
+    { name: "Stir the pot", target: "Core profond · anti-rotation", presc: "10 cercles / sens", timer: 0,
+      steps: [
+        "<b>Départ</b> — Avant-bras posés sur le swiss ball, corps en planche, pieds écartés largeur bassin. Gaine abdos et fessiers : le corps forme une ligne droite des talons à la tête.",
+        "<b>Mouvement</b> — Avec les avant-bras, fais rouler le ballon en petits cercles lents (~taille d'une assiette). Le reste du corps ne bouge PAS : seuls les bras dessinent le cercle, le tronc résiste à la rotation.",
+        "<b>Respiration</b> — Souffle régulièrement, ne bloque jamais. 10 cercles dans un sens, puis 10 dans l'autre.",
+        "<b>Erreur à éviter</b> — Bassin qui tombe ou qui part en torsion. Si ça bouge trop, fais des cercles plus petits."
+      ]},
+    { name: "Hollow hold", target: "Transverse · grand droit", presc: "30 s", timer: 30,
+      steps: [
+        "<b>Départ</b> — Allongé sur le dos, bras tendus derrière la tête, jambes tendues.",
+        "<b>Mouvement</b> — Plaque le bas du dos AU SOL (le point clé : aucun espace sous tes lombaires). Décolle simultanément épaules et jambes de quelques centimètres. Le corps forme une cuvette/banane.",
+        "<b>Respiration</b> — Petites respirations courtes, le ventre reste gainé.",
+        "<b>Trop dur ?</b> — Plie les genoux ou garde les bras le long du corps. <b>Erreur</b> : si le bas du dos se décolle du sol, tu perds tout — remonte les jambes."
+      ]},
+    { name: "Planche latérale", target: "Obliques · chaîne latérale", presc: "30 s / côté", timer: 30,
+      steps: [
+        "<b>Départ</b> — Sur le côté, coude posé juste SOUS l'épaule, jambes tendues l'une sur l'autre.",
+        "<b>Mouvement</b> — Pousse sur le coude et décolle le bassin pour former une ligne droite tête-bassin-pieds. Monte les hanches haut.",
+        "<b>Respiration</b> — Souffle calmement. Tiens 30 s, puis change de côté.",
+        "<b>Trop dur ?</b> — Pose le genou du dessous au sol. <b>Erreur</b> : bassin qui s'affaisse vers le sol — pense à pousser les hanches vers le plafond."
+      ]},
+  ]},
+  { block: "B", title: "Tirage", meta: "Barre · élastique", ex: [
+    { name: "Tractions", target: "Dorsaux · biceps · grip", presc: "6-10 reps", timer: 0,
+      steps: [
+        "<b>Départ</b> — Suspendu à la barre, mains largeur épaules, paumes vers l'avant. Bras tendus mais épaules actives (pas avachi).",
+        "<b>Mouvement</b> — Tire les coudes vers le bas et l'arrière pour amener le menton au-dessus de la barre. Pense à « rapprocher les omoplates ».",
+        "<b>Respiration</b> — Souffle en montant, inspire en descendant. Descends en contrôle (ne te laisse pas tomber).",
+        "<b>Trop dur ?</b> — Passe un élastique sous tes pieds/genoux pour t'assister. <b>Erreur</b> : se balancer pour tricher — reste gainé, mouvement net."
+      ]},
+    { name: "Rowing haltère", target: "Dos · rhomboïdes", presc: "10 / bras", load: 14, timer: 0,
+      steps: [
+        "<b>Départ</b> — Un genou et une main en appui sur le swiss ball (ou un banc), dos plat parallèle au sol, haltère dans la main libre bras tendu.",
+        "<b>Mouvement</b> — Tire l'haltère vers ta hanche, coude qui longe le corps. En haut, serre l'omoplate. Descends en contrôle.",
+        "<b>Respiration</b> — Souffle en tirant, inspire en descendant. 10 reps, puis change de bras.",
+        "<b>Erreur à éviter</b> — Dos rond ou tronc qui tourne. Garde le dos plat et les hanches fixes : c'est le bras qui travaille, pas le buste."
+      ]},
+    { name: "Face pull élastique", target: "Arrière d'épaules · posture", presc: "15 reps", timer: 0,
+      steps: [
+        "<b>Départ</b> — Élastique fixé à hauteur du visage (poignée de porte, barre). Recule pour le tendre, saisis-le à deux mains, bras tendus devant toi.",
+        "<b>Mouvement</b> — Tire l'élastique vers ton front en écartant les mains, coudes hauts et vers l'extérieur. Pense à « montrer tes biceps » en fin de tirage.",
+        "<b>Respiration</b> — Souffle en tirant. Mouvement lent, sans à-coup.",
+        "<b>Pourquoi</b> — Compense les heures assis et le dos voûté. <b>Erreur</b> : coudes qui tombent — garde-les à hauteur d'épaules."
+      ]},
+  ]},
+  { block: "C", title: "Poussée", meta: "Haltères · poids du corps", ex: [
+    { name: "Développé couché haltères", target: "Pectoraux · triceps · gainage", presc: "10-12 reps", load: 11, timer: 0,
+      steps: [
+        "<b>Départ</b> — Haut du dos et épaules posés sur le swiss ball, pieds au sol, hanches hautes (position de pont). Un haltère dans chaque main, à hauteur de poitrine.",
+        "<b>Mouvement</b> — Presse les haltères vers le plafond jusqu'à bras tendus, sans verrouiller brutalement les coudes. Redescends en contrôle jusqu'à sentir l'étirement des pecs.",
+        "<b>Respiration</b> — Souffle en poussant, inspire en descendant.",
+        "<b>Le swiss ball</b> ajoute un travail de gainage (instabilité). <b>Erreur</b> : laisser les hanches tomber — serre les fessiers tout le long pour rester en pont."
+      ]},
+    { name: "Développé militaire", target: "Épaules · triceps", presc: "8-10 reps", load: 8, timer: 0,
+      steps: [
+        "<b>Départ</b> — Debout, pieds largeur bassin, gainé. Haltères à hauteur d'épaules, paumes vers l'avant.",
+        "<b>Mouvement</b> — Presse les haltères droit au-dessus de la tête jusqu'à bras tendus. Redescends jusqu'aux épaules en contrôle.",
+        "<b>Respiration</b> — Souffle en montant, inspire en descendant.",
+        "<b>Erreur à éviter</b> — Cambrer le bas du dos pour pousser plus lourd. Gaine les abdos et les fessiers : le mouvement vient des épaules, pas du dos."
+      ]},
+    { name: "Pompes", target: "Pecs · triceps · core", presc: "12-15 reps", timer: 0,
+      steps: [
+        "<b>Départ</b> — Mains un peu plus larges que les épaules, corps en planche gainée, talons-tête alignés.",
+        "<b>Mouvement</b> — Descends en pliant les coudes (~45° par rapport au corps, pas écartés à 90°) jusqu'à frôler le sol. Repousse jusqu'à bras tendus.",
+        "<b>Respiration</b> — Inspire en descendant, souffle en poussant.",
+        "<b>Trop facile ?</b> — Pose les pieds sur le swiss ball (instabilité + plus dur). <b>Trop dur ?</b> — Sur les genoux. <b>Erreur</b> : bassin qui tombe — reste gainé."
+      ]},
+  ]},
+  { block: "D", title: "Jambes & chaîne post.", meta: "Haltères · trail-spécifique", ex: [
+    { name: "Goblet squat", target: "Quadris · fessiers · mobilité", presc: "15 reps", load: 19.5, timer: 0,
+      steps: [
+        "<b>Départ</b> — Debout, pieds largeur épaules légèrement ouverts. Tiens UN haltère verticalement contre ta poitrine, à deux mains (comme un gobelet).",
+        "<b>Mouvement</b> — Descends en poussant les fessiers vers l'arrière et le bas, comme pour t'asseoir. Genoux dans l'axe des pieds. Descends jusqu'à cuisses parallèles au sol (ou plus bas si mobilité). Remonte en poussant sur les talons.",
+        "<b>Respiration</b> — Inspire en descendant, souffle en remontant.",
+        "<b>Erreur à éviter</b> — Talons qui décollent ou genoux qui rentrent vers l'intérieur. Garde le poids sur les talons, le buste droit."
+      ]},
+    { name: "Fentes marchées", target: "Unilatéral · équilibre trail", presc: "10 / jambe", load: 11, timer: 0,
+      steps: [
+        "<b>Départ</b> — Debout, un haltère dans chaque main bras le long du corps.",
+        "<b>Mouvement</b> — Grand pas en avant, descends jusqu'à ce que le genou arrière frôle le sol et que la cuisse avant soit parallèle au sol. Pousse sur le talon avant pour ramener le pied arrière, et enchaîne avec l'autre jambe (tu avances).",
+        "<b>Respiration</b> — Inspire en descendant, souffle en remontant.",
+        "<b>Trail++</b> — Le travail unilatéral corrige tes déséquilibres droite/gauche. <b>Erreur</b> : genou avant qui dépasse loin devant les orteils — fais un pas plus grand."
+      ]},
+    { name: "Soulevé de terre roumain", target: "Ischios · fessiers · lombaires", presc: "12 reps", load: 24, timer: 0,
+      steps: [
+        "<b>Départ</b> — Debout, haltères devant les cuisses, jambes quasi tendues (genoux à peine fléchis, fixes).",
+        "<b>Mouvement</b> — Pousse les fessiers loin vers l'ARRIÈRE en laissant les haltères glisser le long des jambes. Le dos reste plat. Descends jusqu'à sentir l'étirement des ischios (mi-tibia environ). Reviens en poussant les hanches vers l'avant.",
+        "<b>Respiration</b> — Inspire en descendant, souffle en remontant.",
+        "<b>LE point clé</b> — C'est un mouvement de HANCHE, pas de dos. Dos plat en permanence. <b>Erreur</b> : arrondir le dos ou plier les genoux comme un squat."
+      ]},
+    { name: "Hip thrust swiss ball", target: "Fessiers · chaîne post.", presc: "15 reps", timer: 0,
+      steps: [
+        "<b>Départ</b> — Assis au sol, le haut du dos calé contre le swiss ball, pieds à plat largeur bassin, genoux fléchis.",
+        "<b>Mouvement</b> — Pousse sur les talons et monte le bassin jusqu'à ce que le corps soit aligné épaules-bassin-genoux. En HAUT, serre fort les fessiers 1 seconde. Redescends en contrôle.",
+        "<b>Respiration</b> — Souffle en montant, inspire en descendant.",
+        "<b>Pour charger</b> — Pose un haltère sur le bassin (tiens-le à deux mains). <b>Erreur</b> : cambrer le bas du dos en haut — c'est les fessiers qui montent le bassin, pas les lombaires."
+      ]},
+  ]},
+];
+
+const blocksHost = document.getElementById('blocks');
+let totalEx = 0;
+
+const icon = '<svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"></polyline></svg>';
+
+let allHtml = '';
+PLAN.forEach((blk, bi) => {
+  allHtml += `<section class="block"><div class="block-head">
+    <span class="block-num">${blk.block}</span>
+    <span class="block-title">${blk.title}</span>
+    <span class="block-meta">${blk.meta}</span></div>`;
+  blk.ex.forEach((e, ei) => {
+    totalEx++;
+    const id = `${bi}-${ei}`;
+    let loadHtml = '';
+    if (e.load !== undefined) {
+      const opts = WEIGHTS.map(w => `<option value="${w}" ${w===e.load?'selected':''}>${w} kg</option>`).join('');
+      loadHtml = `<select class="load-pick" data-stop>${opts}</select>`;
+    }
+    let timerHtml = '';
+    if (e.timer > 0) {
+      timerHtml = `<button class="timer-btn" data-stop data-timer="${e.timer}" data-name="${e.name}">⏱ Lancer</button>`;
+    }
+    allHtml += `<div class="ex" data-id="${id}">
+      <div class="tick">${icon}</div>
+      <div class="ex-body">
+        <div class="ex-name">${e.name}</div>
+        <button class="ex-toggle" data-stop>Voir la technique <span class="caret">▸</span></button>
+        <div class="ex-steps">${e.steps.map(s => `<p>${s}</p>`).join('')}</div>
+        <div class="ex-target">${e.target}</div>
+      </div>
+      <div class="ex-load">
+        <div class="ex-prescrip">${e.presc}</div>
+        ${loadHtml}${timerHtml}
+      </div>
+    </div>`;
+  });
+  allHtml += `</section>`;
+});
+blocksHost.innerHTML = allHtml;
+
+const fill = document.getElementById('fill');
+const pct = document.getElementById('pct');
+function updateProgress() {
+  const done = document.querySelectorAll('.ex.done').length;
+  const p = Math.round(done / totalEx * 100);
+  fill.style.width = p + '%';
+  pct.textContent = p + '%';
+}
+
+document.querySelectorAll('.ex-toggle').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    btn.classList.toggle('open');
+    btn.nextElementSibling.classList.toggle('open');
+  });
+});
+
+document.querySelectorAll('.ex').forEach(ex => {
+  ex.addEventListener('click', (evt) => {
+    if (evt.target.closest('[data-stop]')) return;
+    ex.classList.toggle('done');
+    updateProgress();
+  });
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+  document.querySelectorAll('.ex.done').forEach(e => e.classList.remove('done'));
+  updateProgress();
+});
+
+// TIMER
+const overlay = document.getElementById('overlay');
+const tEx = document.getElementById('t-ex');
+const tClock = document.getElementById('t-clock');
+let interval = null, current = 0, startVal = 0;
+
+function fmt(s){ const m = Math.floor(s/60); const sec = s%60; return m>0? `${m}:${sec.toString().padStart(2,'0')}` : `0:${sec.toString().padStart(2,'0')}`; }
+
+function runTimer(sec, name){
+  startVal = sec; current = sec;
+  tEx.textContent = name; tClock.textContent = fmt(current);
+  overlay.classList.add('on');
+  clearInterval(interval);
+  interval = setInterval(() => {
+    current--;
+    tClock.textContent = fmt(Math.max(current,0));
+    if (current <= 0){ clearInterval(interval); tClock.style.color = 'var(--sweat)';
+      if (navigator.vibrate) navigator.vibrate([200,100,200]); }
+  }, 1000);
+}
+
+document.querySelectorAll('.timer-btn').forEach(b => {
+  b.addEventListener('click', () => runTimer(parseInt(b.dataset.timer), b.dataset.name));
+});
+document.getElementById('t-stop').addEventListener('click', () => {
+  clearInterval(interval); overlay.classList.remove('on'); tClock.style.color = '';
+});
+document.getElementById('t-restart').addEventListener('click', () => {
+  tClock.style.color = ''; runTimer(startVal, tEx.textContent);
+});
+</script>
+</body>
+</html>
