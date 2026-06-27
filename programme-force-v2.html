@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Programme Force & Puissance</title>
+<style>
+  :root {
+    --ink:#0c1014; --panel:#161c23; --panel2:#1e2630; --line:#2b343f;
+    --fog:#8d99a7; --chalk:#f1f4f7; --gold:#e5b800; --blue:#3fa0ff; --burn:#ff6b3d;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { overflow-x:hidden; }
+  body {
+    background:var(--ink); color:var(--chalk);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    line-height:1.5; padding:0 14px calc(60px + env(safe-area-inset-bottom));
+    -webkit-font-smoothing:antialiased; width:100%;
+  }
+  .wrap { max-width:640px; margin:0 auto; width:100%; }
+
+  header { padding:36px 0 18px; }
+  .eyebrow { font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); }
+  h1 { font-size:30px; font-weight:800; line-height:1.05; margin:6px 0 10px; letter-spacing:-.5px; }
+  h1 span { color:var(--gold); }
+  .lede { color:var(--fog); font-size:14px; }
+  .facts { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .fact { background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:7px 11px; flex:1; min-width:130px; }
+  .fact .k { font-size:9px; text-transform:uppercase; letter-spacing:.08em; color:var(--fog); font-weight:700; }
+  .fact .v { font-size:13px; font-weight:600; margin-top:1px; }
+
+  /* L4L5 warning */
+  .warn-box { background:#241410; border-left:3px solid var(--burn); border-radius:0 6px 6px 0; padding:14px 15px; margin:20px 0; }
+  .warn-box .wt { color:var(--burn); font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:7px; }
+  .warn-box p { font-size:13px; color:#cdd5dd; margin-bottom:6px; }
+  .warn-box p:last-child { margin-bottom:0; }
+  .warn-box b { color:var(--chalk); }
+  .gold-box { background:#211d0c; border-left:3px solid var(--gold); border-radius:0 6px 6px 0; padding:14px 15px; margin:20px 0; }
+  .gold-box .wt { color:var(--gold); font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:7px; }
+  .gold-box p { font-size:13px; color:#cdd5dd; }
+  .gold-box b { color:var(--chalk); }
+
+  /* how to use */
+  .section-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); background:var(--gold); display:inline-block; padding:2px 8px; border-radius:3px; margin:26px 0 8px; }
+  .howto { font-size:13.5px; color:var(--fog); }
+  .howto b { color:var(--chalk); }
+  .howto ul { margin:8px 0 8px 18px; }
+  .howto li { margin-bottom:6px; }
+
+  /* TABS */
+  .tabs { display:flex; gap:8px; position:sticky; top:0; z-index:20;
+    background:var(--ink); padding:12px 0 10px; margin-top:8px; }
+  .tab { flex:1; text-align:center; padding:11px 6px; border-radius:7px;
+    background:var(--panel2); border:1px solid var(--line); color:var(--fog);
+    font-weight:700; font-size:13px; cursor:pointer; transition:.15s; letter-spacing:.02em; }
+  .tab.on { background:var(--gold); color:var(--ink); border-color:var(--gold); }
+  .tab small { display:block; font-size:10px; font-weight:600; opacity:.8; margin-top:1px; }
+
+  .pane { display:none; }
+  .pane.on { display:block; }
+
+  .pane-intro { font-size:13px; color:var(--fog); padding:4px 2px 0; }
+
+  /* BLOCK */
+  .blk { margin-top:18px; border:1px solid var(--line); border-radius:9px; overflow:hidden; }
+  .blk-head { display:flex; align-items:center; gap:9px; padding:13px 14px; cursor:pointer;
+    background:var(--panel); }
+  .blk-head .num { font-weight:800; font-size:13px; width:22px; height:22px; flex-shrink:0;
+    display:grid; place-items:center; border-radius:5px; color:var(--ink); }
+  .blk-head .ttl { font-weight:800; font-size:15px; flex:1; }
+  .blk-head .meta { font-size:10.5px; color:var(--fog); text-align:right; max-width:38%; }
+  .blk-head .arr { font-size:13px; color:var(--fog); transition:.2s; }
+  .blk.open .blk-head .arr { transform:rotate(90deg); }
+  .blk-body { display:none; padding:4px 12px 12px; }
+  .blk.open .blk-body { display:block; }
+
+  /* EXERCISE CARD */
+  .xc { border-top:1px solid var(--line); padding:13px 2px; }
+  .xc:first-child { border-top:none; }
+  .xc-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .xc-name { font-weight:700; font-size:15px; line-height:1.25; }
+  .xc-presc { font-weight:800; font-size:14px; white-space:nowrap; color:var(--gold); text-align:right; }
+  .xc-rest { font-size:10px; color:var(--fog); font-weight:600; }
+  .xc-cue { font-size:12.5px; color:var(--fog); margin-top:4px; line-height:1.5; }
+  .xc-cue b { color:#cdd5dd; }
+  .xc-alts { margin-top:8px; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:9px 11px; }
+  .xc-alts .at { font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--blue); font-weight:700; margin-bottom:4px; }
+  .xc-alts div.alt { font-size:12.5px; color:var(--fog); margin-bottom:3px; }
+  .xc-alts div.alt:last-child { margin-bottom:0; }
+  .key { display:inline-block; font-size:9px; font-weight:700; color:var(--gold); border:1px solid var(--gold);
+    border-radius:3px; padding:0 5px; margin-left:6px; vertical-align:middle; text-transform:uppercase; letter-spacing:.04em; }
+
+  .phase-color-1 .num { background:var(--blue); }
+  .phase-color-2 .num { background:var(--chalk); }
+  .phase-color-3 .num { background:var(--gold); }
+  .phase-color-4 .num { background:#b07cff; }
+  .phase-color-5 .num { background:var(--burn); }
+
+  footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--line); }
+  footer p { font-size:11.5px; color:var(--fog); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Renforcement musculaire · niveau intermédiaire</div>
+    <h1>Force &amp; <span>Puissance</span></h1>
+    <p class="lede">Cédric · 48 ans · coureur (marathon &lt; 4h) · priorité équilibre + prévention</p>
+    <div class="facts">
+      <div class="fact"><div class="k">Fréquence</div><div class="v">1× mini · 2× idéal</div></div>
+      <div class="fact"><div class="k">Durée</div><div class="v">50-65 min</div></div>
+      <div class="fact"><div class="k">Focus</div><div class="v">Chaîne post. · bassin · lombaires</div></div>
+    </div>
+  </header>
+
+  <div class="warn-box">
+    <div class="wt">⚠ Règles lombaires L4-L5 — sur tous les exercices</div>
+    <p><b>Dos neutre &amp; gainage permanent</b> — avant chaque rep avec charge, contracte les abdos comme si tu attendais un coup au ventre. Le dos ne s'arrondit jamais sous charge.</p>
+    <p><b>Mouvement de hanche, pas de dos</b> — sur tout ce qui ramasse au sol (soulevé, rowing), plie les hanches en gardant le dos plat. Tu ne t'enroules pas.</p>
+    <p><b>Interdits</b> — pas de flexion lombaire lestée (crunch chargé), pas de rotation rapide sous charge. Le renfort passe par la <b>stabilité</b>, pas la flexion.</p>
+    <p><b>Douleur</b> — gêne lombaire vive = stop, on passe à l'alternative. On renforce progressivement, jamais en forçant à travers la douleur.</p>
+  </div>
+
+  <span class="section-label">Mode d'emploi</span>
+  <div class="howto">
+    <p><b>Deux séances complètes</b> (A &amp; B), chacune travaille tout le corps avec une dominante différente. Tu alternes pour ne jamais refaire la même séance.</p>
+    <ul>
+      <li><b>2×/semaine</b> : Séance A en début de semaine, B en fin (ex. mardi + vendredi), 48h d'écart mini, à distance des sorties course intenses.</li>
+      <li><b>1×/semaine</b> : alterne A puis B d'une semaine sur l'autre.</li>
+      <li><b>Variété</b> : chaque exercice a 2 alternatives (même muscle, même objectif). Change-les toutes les 2-3 semaines.</li>
+    </ul>
+    <p style="font-size:12.5px"><b>Charges</b> — Puissance : léger, vitesse max. Force : lourd, finir à 1-2 reps de l'échec. Gainage : contrôle parfait, jamais l'échec. Si une série de force passe avec 3+ reps en réserve, monte la charge la prochaine fois.</p>
+  </div>
+
+  <div class="gold-box">
+    <div class="wt">Les alternatives = même dosage</div>
+    <p>Quand tu prends une alternative, tu gardes <b>exactement les mêmes séries × reps et le même repos</b> que l'exercice de base. Seul le mouvement change. Ex. : Goblet squat 4×10 / 75s → «&nbsp;Fentes marchées&nbsp;» aussi en 4×10 / 75s.</p>
+  </div>
+
+  <div class="gold-box">
+    <div class="wt">Placement avec ta course</div>
+    <p><b>Jamais de jambes lourdes la veille d'une séance course qualité ou d'une sortie longue</b> — la course reste prioritaire, les jambes doivent être fraîches.</p>
+    <p style="margin-top:8px; font-size:12.5px"><b>2 renfo + 2 course</b> : répartis sur 4 jours (ex. Lun A · Mar qualité · Jeu B · Sam longue). <b>Semaine chargée → 1 renfo</b> : garde la Séance A (chaîne post.), alterne A/B d'une semaine sur l'autre.</p>
+  </div>
+
+  <div class="warn-box">
+    <div class="wt">Adapté à ton profil</div>
+    <p><b>Coude (épitrochléite)</b> — sur les tirages et le swing, ne sur-serre pas la poignée, poignet neutre. Tiraillement côté interne du coude = allège ou passe à l'élastique.</p>
+    <p><b>Bêta-thalassémie</b> — peut accentuer la fatigue. Prends les repos hauts de la fourchette, et le finisher reste optionnel : saute-le sans culpabiliser les jours de fatigue.</p>
+    <p><b>Stabilité du bassin</b> — axe prioritaire. Le unilatéral (fentes, split squat, soulevé 1 jambe) et le gainage latéral le développent : ne les bâcle pas, ils protègent genoux et dos en course.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab on" data-pane="A">SÉANCE A<small>Postérieure · tirage</small></div>
+    <div class="tab" data-pane="B">SÉANCE B<small>Poussée · antérieure</small></div>
+  </div>
+
+  <!-- PANE A -->
+  <div class="pane on" id="pane-A">
+    <p class="pane-intro">Chaîne postérieure (fessiers, ischios, dos) — la zone qui te propulse en course et qui décharge tes lombaires. Plus elle est forte, moins ton bas du dos compense.</p>
+    <div id="blocks-A"></div>
+  </div>
+
+  <!-- PANE B -->
+  <div class="pane" id="pane-B">
+    <p class="pane-intro">Haut du corps en poussée (pecs, épaules, triceps) + quadriceps. Complète la séance A pour un développement équilibré, toujours avec le bloc lombaire en sécurité.</p>
+    <div id="blocks-B"></div>
+  </div>
+
+  <!-- FINISHER (shared) -->
+  <span class="section-label" style="margin-top:30px">Finisher commun</span>
+  <div class="gold-box">
+    <div class="wt">Circuit perte de poids (optionnel)</div>
+    <p>À ajouter en fin de séance A ou B. <b>3 tours</b>, 40s effort / 20s repos par exercice, 1 min entre les tours. Monte le cardio, accélère la dépense. Aucun mouvement à risque pour le dos.</p>
+    <p style="margin-top:8px; font-size:12.5px">Squats poids du corps · Swing haltère léger · Pompes · Gainage dynamique <span style="color:var(--fog)">(alt : montées de genoux · step-ups · développé élastique · mountain climbers lents dos plat)</span></p>
+  </div>
+
+  <div class="gold-box">
+    <div class="wt">Perte de poids — la vérité utile</div>
+    <p>La muscu accélère ton métabolisme et préserve le muscle, mais <b>la perte de poids se joue à ~80% dans l'assiette</b>. Ce programme + tes sorties course créent la dépense ; c'est le déficit calorique alimentaire qui fait fondre le gras. La balance seule ment — prends aussi ton tour de taille.</p>
+  </div>
+
+  <footer>
+    <p><b style="color:var(--burn)">Avertissement</b> — Cadre d'entraînement général, pas un avis médical. Vu ta faiblesse L4-L5, fais valider une fois le bloc charnière de hanche (soulevé roumain, swing) par un kiné. Douleur irradiante dans la jambe, engourdissement ou douleur aiguë : stop et consultation.</p>
+  </footer>
+
+</div>
+
+<script>
+const DATA = {
+  A: [
+    { num:"①", phase:1, title:"Échauffement & activation", meta:"1 tour · sans repos", ex:[
+      { name:"Cat-camel (chat-chameau)", presc:"8 lents", cue:"À 4 pattes, arrondis puis creuse le dos en douceur. Mobilise la colonne sans charge." },
+      { name:"Glute bridge", presc:"15", cue:"Allongé, monte le bassin, serre les fessiers 1s en haut. Réveille les fessiers." },
+      { name:"Lateral band walk (élastique)", presc:"12 pas/sens", cue:"Élastique aux chevilles/genoux, demi-squat, pas latéraux.", key:"Stabilité bassin" },
+      { name:"Bird-dog", presc:"8 / côté", cue:"Bras + jambe opposés tendus, dos plat immobile.", key:"Clé lombaire" },
+      { name:"Band pull-apart (élastique)", presc:"15", cue:"Élastique tendu devant, écarte les bras. Réveille le haut du dos." },
+    ]},
+    { num:"②", phase:2, title:"Puissance", meta:"explosif · récup complète", ex:[
+      { name:"Dumbbell swing", presc:"4 × 8", rest:"75 s", cue:"Charnière de hanche explosive, propulse l'haltère avec les <b>fessiers</b> — pas avec les bras ni le dos.",
+        alts:["Step-up explosif sur marche haute (haltères légers)","Squat sauté (poids du corps)"] },
+    ]},
+    { num:"③", phase:3, title:"Force", meta:"le cœur de la séance", ex:[
+      { name:"Soulevé de terre roumain (haltères)", presc:"4 × 8", rest:"90 s", cue:"Dos plat, hanches en arrière, glisse les haltères le long des jambes. <b>LE mouvement-clé chaîne postérieure.</b>",
+        alts:["Hip thrust swiss ball lesté","Soulevé de terre une jambe (haltère léger — bonus stabilité bassin)"] },
+      { name:"Goblet squat", presc:"4 × 10", rest:"75 s", cue:"Un haltère contre la poitrine, descente cuisses parallèles, poids sur les talons.",
+        alts:["Fentes marchées (haltères)","Split squat bulgare (pied arrière sur le ballon)"] },
+      { name:"Rowing haltère 1 bras", presc:"4 × 10/bras", rest:"75 s", cue:"Appui sur le ballon/banc, dos plat, tire au bassin, pas de torsion du buste.",
+        alts:["Traction assistée élastique","Rowing élastique assis (tapis)"] },
+      { name:"Face pull élastique", presc:"3 × 15", rest:"60 s", cue:"Tire vers le front, coudes hauts. Posture + arrière d'épaules, anti-dos voûté.",
+        alts:["Reverse fly haltères (buste penché, dos plat)","Tirage menton élastique"] },
+    ]},
+    { num:"④", phase:4, title:"Gainage & lombaires", meta:"priorité L4-L5 · contrôle parfait", ex:[
+      { name:"Bird-dog lesté / lent", presc:"3 × 8/côté", cue:"Lent et contrôlé, dos parfaitement plat.",
+        alts:["Dead bug (anti-extension)","Superman lent (extension douce contrôlée)"] },
+      { name:"Planche latérale", presc:"3 × 30s/côté", cue:"Coude sous l'épaule, hanches hautes, ligne droite.",
+        alts:["Planche latérale genou au sol","Side plank avec montée de hanche"] },
+      { name:"Stir the pot (swiss ball)", presc:"3 × 8 cercles/sens", cue:"Avant-bras sur le ballon en planche, dessine des cercles, le tronc résiste.",
+        alts:["Planche avant sur ballon (gainage)","Pallof press élastique (anti-rotation)"] },
+    ]},
+  ],
+  B: [
+    { num:"①", phase:1, title:"Échauffement & activation", meta:"1 tour · sans repos", ex:[
+      { name:"Cat-camel (chat-chameau)", presc:"8 lents", cue:"Mobilité colonne en douceur, sans charge." },
+      { name:"Dead bug", presc:"8 / côté", cue:"Dos plaqué au sol, bras+jambe opposés descendent.", key:"Clé lombaire" },
+      { name:"Glute bridge", presc:"15", cue:"Active les fessiers avant de charger les jambes." },
+      { name:"Rotation épaules élastique", presc:"12 / bras", cue:"Échauffe la coiffe avant les poussées." },
+    ]},
+    { num:"②", phase:2, title:"Puissance", meta:"explosif · récup complète", ex:[
+      { name:"Push press haltères", presc:"4 × 6", rest:"75 s", cue:"Légère flexion des jambes puis pousse explosif au-dessus de la tête. Gaine le tronc, ne cambre pas.",
+        alts:["Pompes explosives (mains qui décollent)","Broad jump / saut en longueur (poids du corps)"] },
+    ]},
+    { num:"③", phase:3, title:"Force", meta:"le cœur de la séance", ex:[
+      { name:"Développé couché haltères (swiss ball)", presc:"4 × 10", rest:"90 s", cue:"Haut du dos sur le ballon, hanches hautes en pont, presse vers le plafond.",
+        alts:["Pompes (pieds sur ballon pour durcir)","Développé incliné haltères au sol"] },
+      { name:"Développé militaire debout", presc:"4 × 8", rest:"75 s", cue:"Gainé, presse au-dessus de la tête <b>sans cambrer</b> le bas du dos.",
+        alts:["Développé Arnold (rotation poignets)","Développé épaules élastique"] },
+      { name:"Fentes marchées (haltères)", presc:"4 × 10/jambe", rest:"75 s", cue:"Unilatéral = correction des déséquilibres droite/gauche, directement utile en trail.",
+        alts:["Goblet squat","Step-up lesté sur marche"] },
+      { name:"Élévations latérales + curl biceps", presc:"3 × 12", rest:"60 s", cue:"Superset bras/épaules, charge modérée, contrôle.",
+        alts:["Extension triceps élastique","Curl marteau haltères"] },
+    ]},
+    { num:"④", phase:4, title:"Gainage & lombaires", meta:"priorité L4-L5 · contrôle parfait", ex:[
+      { name:"Curl-up de McGill", presc:"3 × 6", cue:"Une jambe pliée, mains sous les lombaires, décolle juste la tête/épaules. Anti-flexion sûr.",
+        alts:["Hollow hold (jambes pliées si besoin)","Gainage planche avant"] },
+      { name:"Pallof press élastique", presc:"3 × 10/côté", cue:"Élastique sur le côté, pousse les bras devant, résiste à la rotation.",
+        alts:["Stir the pot swiss ball","Planche avec touches d'épaule"] },
+      { name:"Superman lent", presc:"3 × 10", cue:"Allongé sur le ventre, décolle bras+jambes en douceur, amplitude contrôlée.",
+        alts:["Bird-dog","Extension lombaire sur swiss ball (amplitude contrôlée)"] },
+    ]},
+  ]
+};
+
+function buildPane(key){
+  const host = document.getElementById('blocks-'+key);
+  let html = '';
+  DATA[key].forEach((blk, i) => {
+    html += `<div class="blk phase-color-${blk.phase} ${i===0?'open':''}">
+      <div class="blk-head">
+        <span class="num">${blk.num}</span>
+        <span class="ttl">${blk.title}</span>
+        <span class="meta">${blk.meta}</span>
+        <span class="arr">▸</span>
+      </div>
+      <div class="blk-body">`;
+    blk.ex.forEach(e => {
+      const rest = e.rest ? `<div class="xc-rest">repos ${e.rest}</div>` : '';
+      const keytag = e.key ? `<span class="key">${e.key}</span>` : '';
+      let alts = '';
+      if (e.alts) {
+        alts = `<div class="xc-alts"><div class="at">Alternatives — même séries × reps</div>${e.alts.map(a=>`<div class="alt">• ${a}</div>`).join('')}</div>`;
+      }
+      html += `<div class="xc">
+        <div class="xc-top">
+          <div class="xc-name">${e.name}${keytag}</div>
+          <div style="text-align:right">
+            <div class="xc-presc">${e.presc}</div>${rest}
+          </div>
+        </div>
+        <div class="xc-cue">${e.cue}</div>
+        ${alts}
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  host.innerHTML = html;
+}
+buildPane('A');
+buildPane('B');
+
+// tab switching
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    document.getElementById('pane-'+t.dataset.pane).classList.add('on');
+    window.scrollTo({top:0, behavior:'instant'});
+  });
+});
+
+// block collapse (delegated, robust)
+document.addEventListener('click', (e) => {
+  const head = e.target.closest('.blk-head');
+  if (head) head.parentElement.classList.toggle('open');
+});
+</script>
+</body>
+</html>
