@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Convalescence Achille — S6+</title>
+<style>
+  :root {
+    --ink:#0c1014; --panel:#161c23; --panel2:#1e2630; --line:#2b343f;
+    --fog:#8d99a7; --chalk:#f1f4f7; --green:#2ec38a; --green-d:#1f9e6b; --red:#ff5c5c; --blue:#3fa0ff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { overflow-x:hidden; }
+  body { background:var(--ink); color:var(--chalk);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    line-height:1.5; padding:0 14px calc(60px + env(safe-area-inset-bottom));
+    -webkit-font-smoothing:antialiased; width:100%; }
+  .wrap { max-width:640px; margin:0 auto; width:100%; }
+
+  header { padding:34px 0 16px; }
+  .eyebrow { font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--green); }
+  h1 { font-size:27px; font-weight:800; line-height:1.08; margin:6px 0 10px; letter-spacing:-.5px; }
+  h1 span { color:var(--green); }
+  .lede { color:var(--fog); font-size:13.5px; }
+  .facts { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .fact { background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:7px 11px; flex:1; min-width:140px; }
+  .fact .k { font-size:9px; text-transform:uppercase; letter-spacing:.08em; color:var(--fog); font-weight:700; }
+  .fact .v { font-size:13px; font-weight:600; margin-top:1px; }
+
+  .warn-box { background:#241210; border-left:3px solid var(--red); border-radius:0 6px 6px 0; padding:14px 15px; margin:18px 0; }
+  .warn-box .wt { color:var(--red); font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:7px; }
+  .warn-box p { font-size:13px; color:#cdd5dd; margin-bottom:7px; }
+  .warn-box p:last-child { margin-bottom:0; }
+  .warn-box b { color:var(--chalk); }
+  .green-box { background:#0e2019; border-left:3px solid var(--green-d); border-radius:0 6px 6px 0; padding:14px 15px; margin:18px 0; }
+  .green-box .wt { color:var(--green); font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:7px; }
+  .green-box p { font-size:13px; color:#cdd5dd; }
+  .green-box b { color:var(--chalk); }
+
+  .section-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); background:var(--green); display:inline-block; padding:2px 8px; border-radius:3px; margin:24px 0 8px; }
+  .howto { font-size:13.5px; color:var(--fog); }
+  .howto b { color:var(--chalk); }
+  .howto ul { margin:8px 0 8px 18px; }
+  .howto li { margin-bottom:6px; }
+
+  .blk { margin-top:16px; border:1px solid var(--line); border-radius:9px; overflow:hidden; }
+  .blk-head { display:flex; align-items:center; gap:9px; padding:13px 14px; cursor:pointer; background:var(--panel); }
+  .blk-head .num { font-weight:800; font-size:12px; padding:2px 7px; flex-shrink:0; border-radius:5px; color:var(--ink); background:var(--green); }
+  .blk-head .ttl { font-weight:800; font-size:15px; flex:1; }
+  .blk-head .meta { font-size:10px; color:var(--fog); text-align:right; max-width:36%; }
+  .blk-head .arr { font-size:13px; color:var(--fog); transition:.2s; }
+  .blk.open .blk-head .arr { transform:rotate(90deg); }
+  .blk-body { display:none; padding:2px 12px 12px; }
+  .blk.open .blk-body { display:block; }
+  .blk-intro { font-size:12px; color:var(--fog); padding:8px 2px 2px; }
+
+  .xc { border-top:1px solid var(--line); padding:12px 2px; }
+  .xc:first-of-type { border-top:none; }
+  .xc-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .xc-name { font-weight:700; font-size:14.5px; line-height:1.25; }
+  .xc-presc { font-weight:800; font-size:13px; white-space:nowrap; color:var(--green); text-align:right; }
+  .xc-cue { font-size:12.5px; color:var(--fog); margin-top:4px; line-height:1.5; }
+  .xc-cue b { color:#cdd5dd; }
+  .xc-charge { display:inline-block; font-size:11px; font-weight:700; color:var(--ink);
+    background:#8fe6c0; border-radius:4px; padding:2px 8px; margin-top:6px; }
+  .xc-video { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600;
+    color:var(--blue); text-decoration:none; margin-top:8px; border:1px solid var(--line);
+    background:var(--panel2); padding:5px 10px; border-radius:5px; }
+  .xc-video:active { background:var(--line); }
+
+  footer { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); }
+  footer p { font-size:11.5px; color:var(--fog); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Convalescence · Semaine 6+ · sans appui</div>
+    <h1>Tendon d'<span>Achille droit</span></h1>
+    <p class="lede">Post-op · maintien musculaire pendant l'immobilisation · Cédric</p>
+    <div class="facts">
+      <div class="fact"><div class="k">Jambe droite</div><div class="v">Aucun appui</div></div>
+      <div class="fact"><div class="k">Fréquence</div><div class="v">2-3× / sem · 30-40 min</div></div>
+      <div class="fact"><div class="k">Position</div><div class="v">Assis ou allongé</div></div>
+    </div>
+  </header>
+
+  <div class="warn-box">
+    <div class="wt">⚠ À lire avant tout — sécurité du tendon</div>
+    <p><b>Ce document ne remplace pas le protocole de ton chirurgien et de ton kiné.</b> C'est un cadre de maintien des zones non blessées. Fais-le valider dès ta 1re séance de kiné.</p>
+    <p><b>Aucun appui sur la jambe droite</b> — tout se fait assis sur un siège stable (pas le swiss ball : risque de chute) ou allongé au sol. Le pied droit ne touche jamais le sol en charge.</p>
+    <p><b>Zéro sollicitation du mollet et de la cheville droite</b> — pas de mouvement de cheville, pas d'étirement, pas de contraction du mollet, pas de pointe.</p>
+    <p><b>Installation</b> — prépare ton matériel à portée avant de t'installer, pour ne pas te relever en cours de série. Évite tout choc sur la jambe opérée.</p>
+  </div>
+
+  <div class="warn-box">
+    <div class="wt">⚠ Deux points médicaux</div>
+    <p><b>1. Relance ta prescription de kiné cette semaine.</b> À 6 semaines, la rééducation supervisée devrait démarrer. Sans elle, le travail actif de la cheville reste bloqué. Priorité n°1.</p>
+    <p><b>2. Surveillance phlébite.</b> Douleur/gonflement inhabituel au mollet <b>gauche</b>, chaleur, ou essoufflement soudain → médecin sans attendre. Bouge ta cheville gauche dans la journée.</p>
+  </div>
+
+  <span class="section-label">Mode d'emploi</span>
+  <div class="howto">
+    <p>L'objectif n'est pas de progresser mais de <b>préserver un maximum de muscle</b> pendant que le tendon cicatrise. Bien tenir ce cap = retour plus rapide et plus sûr.</p>
+    <ul>
+      <li><b>2-3 séances / semaine</b> (30-40 min), les jours en forme et sans douleur.</li>
+      <li>Une séance = <b>Haut du corps + Tronc + Jambe gauche</b>. Tu peux scinder en 2 mini-séances si tu fatigues vite.</li>
+      <li><b>Charges</b> : haltères 3 / 8,5 / 14 / 19,5 / 25 kg par main. Garde 2-3 reps en réserve — on maintient, pas de records.</li>
+      <li><b>Bénéfice croisé</b> : muscler la jambe gauche entretient en partie la force de la droite (effet nerveux documenté). Ne néglige pas ce bloc.</li>
+    </ul>
+  </div>
+
+  <div id="blocks"></div>
+
+  <div class="warn-box">
+    <div class="wt">Jambe droite — interdit à ce stade</div>
+    <p>Pas de mise en charge · pas de mouvement de cheville · pas de contraction du mollet · pas d'étirement · pas de montée sur pointe · pas de squat/pont bilatéral. <b style="color:var(--red)">Le travail actif du tendon droit ne commence qu'avec ton kiné.</b></p>
+  </div>
+
+  <span class="section-label">La suite — avec ton kiné</span>
+  <div class="green-box">
+    <p style="margin-bottom:7px"><b>Aucune étape ne se lance sans son feu vert.</b></p>
+    <p style="font-size:12.5px"><b>Reprise d'appui</b> → charge progressive avec botte + talonnettes. <b>Cheville active</b> → mobilité douce + isométrie. <b>Renfo mollet</b> → souvent S10-12+, montées sur pointe très progressives. <b>Retour course</b> → bien plus tard, après validation de la force du tendon.</p>
+  </div>
+
+  <div class="green-box">
+    <div class="wt">Le mot de la fin</div>
+    <p>Ton objectif marathon est décalé, pas perdu. Un Achille opéré et bien rééduqué récupère bien. Ton meilleur investissement maintenant : entretenir le haut du corps et la jambe saine, protéger le tendon, et démarrer la kiné au plus vite. Chaque semaine sans perte de muscle est gagnée sur ton retour.</p>
+  </div>
+
+  <footer>
+    <p><b style="color:var(--red)">Avertissement</b> — Cadre général de maintien, pas un avis médical ni un protocole de rééducation. Concerne uniquement les zones non blessées. Ton chirurgien et ton kiné restent seuls décisionnaires pour la jambe droite. Doute, douleur au tendon, signe anormal → arrêt et avis médical.</p>
+  </footer>
+
+</div>
+
+<script>
+const DATA = [
+  { num:"1", title:"Haut du corps", meta:"assis ou allongé", intro:"C'est ici que tu maintiens le plus de muscle. Charges confortables, 2-3 tours de chaque.", ex:[
+    { name:"Développé militaire assis", presc:"3 × 10", charge:"8,5 → 14 kg / main", cue:"Dos calé, gaine le tronc, presse au-dessus de la tête sans cambrer.", video:"développé militaire assis haltères technique" },
+    { name:"Développé couché haltères au sol", presc:"3 × 10", charge:"14 → 19,5 kg / main", cue:"Allongé, jambes tendues. Le sol limite la descente et protège les épaules.", video:"floor press haltères développé couché au sol" },
+    { name:"Rowing élastique assis", presc:"3 × 12", charge:"élastique moyen/fort", cue:"Ancré devant toi, assis jambe tendue, tire au bassin, serre les omoplates. <b>Poignet neutre</b> (coude).", video:"seated band row rowing élastique assis" },
+    { name:"Élévations latérales assis", presc:"3 × 12", charge:"3 → 8,5 kg / main", cue:"Monte les bras à l'horizontale, léger, contrôle. Pas au-dessus des épaules.", video:"élévations latérales assis haltères" },
+    { name:"Curl biceps assis", presc:"3 × 12", charge:"8,5 → 14 kg / main", cue:"Coudes fixes le long du corps, contrôle la descente.", video:"curl biceps haltères assis technique" },
+    { name:"Extension triceps au-dessus de la tête", presc:"3 × 12", charge:"8,5 → 14 kg (1 haltère)", cue:"Assis, un haltère à deux mains derrière la tête, tends les bras. Coudes serrés.", video:"extension triceps haltère au dessus de la tête" },
+    { name:"Face pull / band pull-apart", presc:"3 × 15", charge:"élastique", cue:"Posture, arrière d'épaules — compense la position assise. Coudes hauts.", video:"band pull apart élastique exercice" },
+  ]},
+  { num:"2", title:"Tronc & gainage", meta:"sans appui pied droit", intro:"On garde la jambe droite immobile et déchargée en permanence.", ex:[
+    { name:"Dead bug (bras + jambe gauche)", presc:"3 × 8", cue:"Dos plaqué. Descends bras + <b>jambe gauche uniquement</b>. La droite reste posée, immobile.", video:"dead bug exercice gainage technique" },
+    { name:"Curl-up de McGill", presc:"3 × 6", cue:"Genou gauche plié (pied gauche au sol), jambe droite tendue posée. Décolle juste tête/épaules.", video:"mcgill curl up exercise" },
+    { name:"Gainage latéral côté gauche", presc:"3 × 30s", cue:"Appui coude gauche + jambe gauche. La droite repose au-dessus, sans contact au sol. Entrée/sortie douce.", video:"gainage latéral side plank technique" },
+    { name:"Pallof press assis (élastique)", presc:"3 × 10/côté", cue:"Élastique ancré sur le côté, pousse les bras devant, résiste à la rotation. Excellent pour le bassin.", video:"pallof press élastique anti rotation" },
+    { name:"Crunch swiss ball (optionnel)", presc:"3 × 12", cue:"<b>Seulement</b> si tu peux t'installer et sortir sans appui pied droit — sinon saute-le. En cas de doute, on ne prend pas le risque.", video:"crunch swiss ball abdos" },
+  ]},
+  { num:"3", title:"Jambe gauche & hanches", meta:"atout transfert croisé", intro:"On muscle la jambe saine à fond et on entretient les hanches sans jamais solliciter la cheville/mollet droit.", ex:[
+    { name:"Extension genou gauche (élastique/lestée)", presc:"3 × 12", charge:"jambe G", cue:"Assis, tends la jambe gauche contre résistance. Quadriceps.", video:"leg extension élastique assis quadriceps" },
+    { name:"Leg curl gauche allongé (élastique)", presc:"3 × 12", charge:"jambe G", cue:"Sur le ventre/côté, ramène le talon gauche vers la fesse. Ischios.", video:"leg curl élastique ischio jambiers allongé" },
+    { name:"Pont fessier une jambe (appui gauche)", presc:"3 × 10", cue:"<b>Seul le pied gauche au sol</b>, jambe droite tendue en l'air. Monte le bassin, serre le fessier gauche.", video:"pont fessier une jambe single leg glute bridge" },
+    { name:"Abduction hanche allongé (2 côtés)", presc:"3 × 12/côté", cue:"Sur le côté, monte la jambe du dessus. Côté droit : <b style='color:var(--green)'>OK car la hanche bouge, pas la cheville</b> — stoppe au moindre tiraillement au talon/tendon.", video:"abduction hanche allongé côté side lying leg raise" },
+    { name:"Clamshell (2 côtés)", presc:"3 × 15/côté", cue:"Genoux pliés, ouvre le genou du dessus. Moyen fessier, stabilité bassin. Aucune sollicitation du tendon.", video:"clamshell exercice fessier moyen" },
+  ]},
+  { num:"4", title:"Circulation & anti-phlébite", meta:"tous les jours", intro:"Pas un entraînement mais essentiel. Plusieurs fois par jour.", ex:[
+    { name:"Pompes de cheville gauche", presc:"20-30 ×/j", cue:"Monte/descends la pointe du pied <b>gauche</b>. Jambe droite : seulement si le chirurgien a autorisé un léger mouvement d'orteils.", video:"pompes de cheville circulation ankle pumps" },
+    { name:"Surélévation jambe droite", presc:"×/j", cue:"Jambe droite surélevée au repos (coussin) pour limiter l'œdème." },
+    { name:"Contractions fessiers/quadriceps", presc:"10 × 5s", cue:"Contractions statiques sans bouger, pour garder le tonus allongé.", video:"contraction isométrique quadriceps set" },
+  ]},
+];
+
+let html='';
+DATA.forEach((blk,i)=>{
+  html+=`<div class="blk ${i===0?'open':''}"><div class="blk-head">
+    <span class="num">${blk.num}</span><span class="ttl">${blk.title}</span>
+    <span class="meta">${blk.meta}</span><span class="arr">▸</span></div>
+    <div class="blk-body"><div class="blk-intro">${blk.intro}</div>`;
+  blk.ex.forEach(e=>{
+    const vid = e.video ? `https://www.youtube.com/results?search_query=${encodeURIComponent(e.video)}` : '';
+    html+=`<div class="xc"><div class="xc-top"><div class="xc-name">${e.name}</div><div class="xc-presc">${e.presc}</div></div>
+      <div class="xc-cue">${e.cue}</div>
+      ${e.charge?`<div><span class="xc-charge">${e.charge}</span></div>`:''}
+      ${vid?`<div><a class="xc-video" href="${vid}" target="_blank" rel="noopener">▶ Vidéo démo</a></div>`:''}</div>`;
+  });
+  html+=`</div></div>`;
+});
+document.getElementById('blocks').innerHTML=html;
+
+document.addEventListener('click',e=>{
+  const h=e.target.closest('.blk-head');
+  if(h) h.parentElement.classList.toggle('open');
+});
+</script>
+</body>
+</html>
