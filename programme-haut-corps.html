@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Programme Haut du Corps — Progressif</title>
+<style>
+  :root{--ink:#0c1014;--panel:#161c23;--panel2:#1e2630;--line:#2b343f;--fog:#8d99a7;--chalk:#f1f4f7;--gold:#e5b800;--blue:#3fa0ff;--green:#2ec38a;--red:#ff5c5c;--orange:#ff8c42;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{overflow-x:hidden;}
+  body{background:var(--ink);color:var(--chalk);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;padding:0 14px calc(60px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased;width:100%;}
+  .wrap{max-width:640px;margin:0 auto;width:100%;}
+  header{padding:32px 0 14px;}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);}
+  h1{font-size:26px;font-weight:800;line-height:1.08;margin:6px 0 10px;letter-spacing:-.5px;}
+  h1 span{color:var(--gold);}
+  .lede{color:var(--fog);font-size:13.5px;}
+  .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px;}
+  .fact{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:7px 11px;flex:1;min-width:140px;}
+  .fact .k{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--fog);font-weight:700;}
+  .fact .v{font-size:13px;font-weight:600;margin-top:1px;}
+  .warn-box{background:#241210;border-left:3px solid var(--red);border-radius:0 6px 6px 0;padding:14px 15px;margin:16px 0;}
+  .warn-box .wt{color:var(--red);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px;}
+  .warn-box p{font-size:13px;color:#cdd5dd;margin-bottom:7px;}
+  .warn-box p:last-child{margin-bottom:0;}
+  .warn-box b{color:var(--chalk);}
+  .gold-box{background:#211d0c;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:14px 15px;margin:16px 0;}
+  .gold-box .wt{color:var(--gold);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px;}
+  .gold-box p{font-size:13px;color:#cdd5dd;}
+  .gold-box b{color:var(--chalk);}
+  .section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--gold);display:inline-block;padding:2px 8px;border-radius:3px;margin:22px 0 8px;}
+  .howto{font-size:13.5px;color:var(--fog);}
+  .howto b{color:var(--chalk);}
+  .howto ul{margin:8px 0 8px 18px;}
+  .howto li{margin-bottom:6px;}
+  .tabs{display:flex;gap:6px;position:sticky;top:0;z-index:20;background:var(--ink);padding:12px 0 10px;margin-top:6px;flex-wrap:wrap;}
+  .tab{flex:1;min-width:70px;text-align:center;padding:10px 4px;border-radius:7px;background:var(--panel2);border:1px solid var(--line);color:var(--fog);font-weight:700;font-size:12px;cursor:pointer;transition:.15s;}
+  .tab.on{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+  .tab small{display:block;font-size:9px;font-weight:600;opacity:.8;margin-top:1px;}
+  .pane{display:none;}
+  .pane.on{display:block;}
+  .pane-intro{font-size:12.5px;color:var(--fog);padding:4px 2px 6px;}
+  .xc{border-bottom:1px solid var(--line);padding:13px 2px;}
+  .xc:last-child{border-bottom:none;}
+  .xc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .xc-name{font-weight:700;font-size:14.5px;line-height:1.25;}
+  .xc-presc{font-weight:800;font-size:13px;white-space:nowrap;color:var(--gold);text-align:right;}
+  .xc-rest{font-size:10px;color:var(--fog);font-weight:600;}
+  .xc-cue{font-size:12.5px;color:var(--fog);margin-top:4px;line-height:1.5;}
+  .xc-cue b{color:#cdd5dd;}
+  .xc-charge{display:inline-block;font-size:11px;font-weight:700;color:var(--ink);background:#fff1b8;border-radius:4px;padding:2px 8px;margin-top:6px;}
+  .xc-video{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--blue);text-decoration:none;margin-top:8px;margin-left:6px;border:1px solid var(--line);background:var(--panel2);padding:4px 9px;border-radius:5px;}
+  .ss{display:inline-block;font-size:9px;font-weight:800;color:var(--ink);background:var(--green);border-radius:3px;padding:1px 5px;margin-right:5px;vertical-align:middle;}
+  .phase{border-left:3px solid var(--gold);padding:2px 0 2px 12px;margin-bottom:12px;}
+  .phase.c2{border-left-color:var(--orange);}
+  .phase.c3{border-left-color:var(--red);}
+  .phase.dl{border-left-color:var(--blue);}
+  .phase .pw{font-size:10px;color:var(--fog);font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+  .phase .pn{font-weight:800;font-size:15px;margin:1px 0 3px;}
+  .phase p{font-size:12.5px;color:var(--fog);}
+  table.tests{width:100%;border-collapse:collapse;margin-top:8px;font-size:12.5px;}
+  table.tests td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.tests td:first-child{font-weight:700;color:var(--chalk);width:42%;}
+  table.tests td:last-child{color:var(--fog);}
+  footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);}
+  footer p{font-size:11.5px;color:var(--fog);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Programme progressif · à la Freeletics · niveau intermédiaire</div>
+    <h1>Haut du corps, <span>Force &amp; Gainage</span></h1>
+    <p class="lede">Cédric · post-op Achille droit (sans appui) · 3 séances/sem + mini quotidienne</p>
+    <div class="facts">
+      <div class="fact"><div class="k">Objectifs</div><div class="v">Force · muscle haut · ventre plat · -poids</div></div>
+      <div class="fact"><div class="k">Cycle</div><div class="v">9 sem. + décharge</div></div>
+      <div class="fact"><div class="k">Durée</div><div class="v">40-50 min / séance</div></div>
+    </div>
+  </header>
+
+  <div class="warn-box">
+    <div class="wt">⚠ Sécurité tendon — prime sur tout</div>
+    <p><b>Aucun appui ni poussée sur la jambe droite.</b> Sur les développés allongés : pied gauche à plat au sol pour stabiliser, jambe droite allongée sur le banc. Jamais de drive du pied droit.</p>
+    <p><b>Zéro sollicitation mollet/cheville droite</b> — pas de mouvement de cheville, pas d'étirement, pas de contraction du mollet, pas de pointe.</p>
+    <p><b>Ta kiné commande.</b> Fais valider ce programme à ta 1re séance. Ses exercices tendon passent avant tout le reste. Ce doc accompagne la rééduc, ne la remplace pas.</p>
+  </div>
+
+  <span class="section-label">L'esprit</span>
+  <div class="howto">
+    <p>Le principe Freeletics qui marche : <b>structure + progression + variété + régularité</b>. Ici calibré sur ta situation — ce qu'aucune app ne fait (elle ignorerait ton tendon).</p>
+    <ul>
+      <li><b>Progression programmée</b> : 3 cycles de 3 semaines qui montent en intensité, puis décharge, puis on repart plus fort.</li>
+      <li><b>Objectifs mesurables & tests</b> : force, gainage et tour de taille testés à dates fixes.</li>
+      <li><b>3 séances/semaine + mini quotidienne</b> : l'idéal en post-op (récup, fatigue bêta-thalassémie, durable). On rebasculera vers un programme complet quand la jambe repartira.</li>
+    </ul>
+    <p style="font-size:12.5px;margin-top:6px"><b>Matériel</b> : Bench 500, barre + 10 kg, haltères 3/8,5/14/19,5/25 kg/main, élastiques 10/20/30 kg, swiss ball, tapis.</p>
+  </div>
+
+  <div class="gold-box">
+    <div class="wt">Charges & intensité (RPE)</div>
+    <p>Fourchette <b>cran bas → cran haut</b>, commence bas. <b>RPE</b> (effort/10) : Cycle 1 = RPE 7 (3 reps en réserve), Cycle 2 = RPE 8, Cycle 3 = RPE 8-9. Jamais l'échec total : forme parfaite avant tout, surtout post-op. <b>SS</b> = superset (exercices enchaînés).</p>
+  </div>
+
+  <div class="tabs">
+    <div class="tab on" data-pane="S1">PUSH<small>Poussée</small></div>
+    <div class="tab" data-pane="S2">PULL<small>Tirage + jambe G</small></div>
+    <div class="tab" data-pane="S3">CORE<small>Ventre + burn</small></div>
+    <div class="tab" data-pane="JOUR">Quotidien<small>10 min</small></div>
+  </div>
+
+  <div class="pane on" id="pane-S1"><p class="pane-intro">Pecs, épaules, triceps. Force et volume du haut. Échauffe 5 min (band pull-apart, rotations épaules) avant.</p><div id="b-S1"></div></div>
+  <div class="pane" id="pane-S2"><p class="pane-intro">Dos, biceps, posture + entretien jambe gauche (bénéfice croisé sur la droite).</p><div id="b-S2"></div></div>
+  <div class="pane" id="pane-S3"><p class="pane-intro">Ventre plat/gainé + dépense calorique. On privilégie le gainage profond aux crunchs (plus efficace et plus sûr pour le dos).</p><div id="b-S3"></div></div>
+  <div class="pane" id="pane-JOUR"><p class="pane-intro">Tous les jours, matin ou soir. Circulation (anti-phlébite) + gainage profond (ventre plat) + mobilité. Rien qui touche le tendon droit.</p><div id="b-JOUR"></div></div>
+
+  <span class="section-label" style="margin-top:26px">Progression — le moteur</span>
+  <div class="phase"><div class="pw">Semaines 1-3</div><div class="pn">Cycle 1 — Fondations · RPE 7</div><p>Maîtrise les mouvements avec le banc, cale ton installation jambe droite. 8-12 reps, cran bas, 3 reps en réserve. Établis tes repères (tests S0).</p></div>
+  <div class="phase c2"><div class="pw">Semaines 4-6</div><div class="pn">Cycle 2 — Force & densité · RPE 8</div><p>Cran haut sur les gros exercices (développés, rowing en 4×6-8 plus lourd). Ajoute du tempo (3s à la descente). 2 reps en réserve.</p></div>
+  <div class="phase c3"><div class="pw">Semaines 7-9</div><div class="pn">Cycle 3 — Définition & gainage · RPE 8-9</div><p>Supersets partout, repos courts (45-60s), finisher systématique, core++. Le cycle qui dessine le haut et affine la taille. Combine au déficit alimentaire.</p></div>
+  <div class="phase dl"><div class="pw">Semaine 10</div><div class="pn">Décharge + tests</div><p>Semaine allégée (-40% charges, moitié du volume). Refais les tests, puis repars sur un bloc plus lourd. Cette boucle = progression sur des mois.</p></div>
+
+  <span class="section-label">Tests — S0, S3, S6, S9</span>
+  <table class="tests">
+    <tr><td>Développé couché × 8</td><td>Charge/main max en 8 reps propres → force</td></tr>
+    <tr><td>Planche max</td><td>Temps tenu, forme parfaite → gainage</td></tr>
+    <tr><td>Hollow hold max</td><td>Temps tenu, dos plaqué → core profond</td></tr>
+    <tr><td>Tour de taille (cm)</td><td>Mètre ruban au nombril, à jeun → <b style="color:var(--chalk)">indicateur clé</b></td></tr>
+    <tr><td>Poids (kg)</td><td>Même heure, 1×/sem → tendance</td></tr>
+  </table>
+
+  <div class="gold-box">
+    <div class="wt">Nutrition — levier n°1 ventre plat & poids</div>
+    <p><b>La perte de tour de ventre = ~80% l'assiette.</b> Le gainage renforce mais ne brûle pas le gras abdominal — c'est le déficit qui le réduit.</p>
+    <p style="margin-top:8px;font-size:12.5px">• <b>Déficit modéré</b> (~300-500 kcal/j) — tu bouges moins à cause du tendon, ajuste les portions à la baisse.<br>• <b>Protéines élevées</b> (~1,6-2 g/kg) — préserve le muscle pendant l'immobilisation.<br>• <b>Moins de sucres rapides & alcool, plus de légumes/eau</b> — le plus efficace sur le tour de ventre.</p>
+    <p style="margin-top:8px;font-size:12.5px">La balance ment au jour le jour : fie-toi à la tendance sur 2-3 semaines et au tour de taille.</p>
+  </div>
+
+  <footer>
+    <p><b style="color:var(--red)">Avertissement</b> — Programme général de renforcement haut du corps/tronc, adapté pour ne pas solliciter le tendon droit. Pas un avis médical ni un protocole de rééduc. Ton chirurgien et ton kiné décident pour ta jambe droite. Fais valider à la 1re séance de kiné. Douleur au tendon, mollet gauche, essoufflement ou doute → arrêt et avis médical.</p>
+  </footer>
+</div>
+
+<script>
+const V = q => "https://www.youtube.com/results?search_query=" + encodeURIComponent(q);
+const DATA = {
+ S1:[
+  {n:"Développé couché haltères (banc plat)",p:"4 × 8",r:"90 s",c:"14 → 19,5 kg / main",v:"développé couché haltères technique",cue:"Pied gauche au sol pour stabiliser, jambe droite allongée sur le banc. Presse vers le plafond, contrôle la descente. <b>Aucune poussée du pied droit.</b>"},
+  {n:"Développé incliné haltères (~30°)",p:"3 × 10",r:"75 s",c:"8,5 → 14 kg / main",v:"développé incliné haltères technique",cue:"Haut des pecs et épaules. Même consigne jambes."},
+  {n:"Développé militaire assis",p:"3 × 10",r:"75 s",c:"8,5 → 14 kg / main",v:"développé militaire assis haltères",cue:"Dos calé, gaine le tronc, presse au-dessus de la tête sans cambrer."},
+  {n:"Élévations latérales assis",p:"3 × 12",r:"SS",c:"3 → 8,5 kg / main",v:"élévations latérales assis haltères",ss:1,cue:"Bras à l'horizontale, léger, contrôle. Dessine les épaules."},
+  {n:"Extension triceps au-dessus de la tête",p:"3 × 12",r:"60 s",c:"8,5 → 14 kg (1 haltère)",v:"extension triceps haltère au dessus de la tête",ss:1,cue:"Enchaîné après les élévations. Coudes serrés, tends les bras."},
+  {n:"Hollow hold",p:"3 × 25s",r:"45 s",v:"hollow hold exercice gainage",cue:"Bas du dos plaqué, jambes repliées si besoin (jambe droite passive). Ventre gainé."},
+ ],
+ S2:[
+  {n:"Rowing haltère 1 bras (appui banc)",p:"4 × 10/bras",r:"75 s",c:"14 → 19,5 kg / main",v:"rowing haltère un bras appui banc",cue:"Genou + main gauche sur le banc, dos plat, tire au bassin. <b>Poignet neutre</b> (coude)."},
+  {n:"Tirage élastique assis (row)",p:"3 × 12",r:"60 s",c:"élastique 20 → 30 kg",v:"seated band row rowing élastique assis",cue:"Ancré devant, assis sur le banc, tire au ventre, serre les omoplates."},
+  {n:"Curl biceps",p:"3 × 12",r:"SS",c:"8,5 → 14 kg / main",v:"curl biceps haltères technique",ss:1,cue:"Coudes fixes, contrôle la descente."},
+  {n:"Face pull élastique",p:"3 × 15",r:"60 s",c:"élastique 10 → 20 kg",v:"band pull apart face pull élastique",ss:1,cue:"Tire vers le front, coudes hauts. Posture, arrière d'épaules."},
+  {n:"Jambe G · Extension genou + Leg curl",p:"3 × 12 chaque",r:"60 s",c:"jambe gauche",v:"leg extension leg curl élastique",cue:"Quadri puis ischio jambe gauche. Bénéfice croisé sur la droite."},
+  {n:"Pont fessier une jambe (appui gauche)",p:"3 × 10",r:"45 s",v:"single leg glute bridge pont fessier une jambe",cue:"Seul le pied gauche au sol, jambe droite tendue en l'air. Monte le bassin, serre le fessier."},
+ ],
+ S3:[
+  {n:"Développé couché OU militaire (alterne)",p:"3 × 10",r:"60 s",c:"charge du cycle",cue:"Un gros exercice de poussée pour entretenir le haut. Alterne d'une séance 3 à l'autre."},
+  {n:"Rowing élastique",p:"3 × 12",r:"60 s",c:"élastique 20 → 30 kg",cue:"Équilibre la poussée ci-dessus."},
+  {n:"Stomach vacuum",p:"4 × 15s",r:"30 s",v:"stomach vacuum exercice transverse ventre plat",cue:"Rentre le ventre au max (nombril vers la colonne), tiens. <b>L'arme n°1 du tour de taille</b> — transverse profond, zéro risque."},
+  {n:"Gainage planche (avant-bras)",p:"3 × 30-45s",r:"45 s",v:"gainage planche avant bras technique",cue:"Corps gainé, dos plat. <b>Si le tendon droit tire, remplace par planche latérale côté gauche.</b>"},
+  {n:"Dead bug (jambe gauche)",p:"3 × 8",r:"SS",v:"dead bug exercice gainage",ss:1,cue:"Dos plaqué, descends bras + jambe gauche. Anti-extension, sûr lombaires."},
+  {n:"Pallof press élastique",p:"3 × 10/côté",r:"45 s",c:"élastique 10 → 20 kg",v:"pallof press élastique anti rotation",ss:1,cue:"Résiste à la rotation. Sculpte la taille, stabilise le tronc."},
+  {n:"FINISHER haut du corps (optionnel)",p:"3 tours",r:"60s/tour",c:"selon fatigue",cue:"Circuit 40s/20s : développé épaules léger · rowing élastique · « boxe » bras haltères légers · gainage. Cardio sans jambes. <b>Saute-le si fatigue.</b>"},
+ ],
+ JOUR:[
+  {n:"Circulation",p:"2 min",cue:"Pompes de cheville <b>gauche</b> (20-30) · contractions statiques quadri/fessier droit (10×5s, sans bouger la cheville) · jambe droite surélevée un moment."},
+  {n:"Gainage ventre plat",p:"4 min",cue:"Stomach vacuum 4×15s · Hollow hold 2×25s · Pallof ou dead bug 2×8. C'est ce bloc quotidien qui affine la taille sur la durée."},
+  {n:"Mobilité haut",p:"4 min",cue:"Mobilité thoracique (rotations buste assis) · ouverture épaules élastique · étirement doux nuque/pecs. Prévention posture."},
+ ],
+};
+
+function build(key){
+  let h='';
+  DATA[key].forEach(e=>{
+    const rest = (e.r && e.r!=="SS") ? `<div class="xc-rest">repos ${e.r}</div>` : '';
+    const ss = e.ss ? `<span class="ss">SS</span>` : '';
+    h+=`<div class="xc"><div class="xc-top"><div class="xc-name">${ss}${e.n}</div><div style="text-align:right"><div class="xc-presc">${e.p}</div>${rest}</div></div>
+      <div class="xc-cue">${e.cue}</div>
+      <div>${e.c?`<span class="xc-charge">${e.c}</span>`:''}${e.v?`<a class="xc-video" href="${V(e.v)}" target="_blank" rel="noopener">▶ Vidéo</a>`:''}</div></div>`;
+  });
+  document.getElementById('b-'+key).innerHTML=h;
+}
+['S1','S2','S3','JOUR'].forEach(build);
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    document.getElementById('pane-'+t.dataset.pane).classList.add('on');
+    window.scrollTo({top:0,behavior:'instant'});
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Plan quotidien & Nutrition</title>
+<style>
+:root{--ink:#0c1014;--panel:#161c23;--panel2:#1e2630;--line:#2b343f;--fog:#8d99a7;--chalk:#f1f4f7;--gold:#e5b800;--blue:#3fa0ff;--green:#2ec38a;--red:#ff5c5c;}
+*{margin:0;padding:0;box-sizing:border-box;}html,body{overflow-x:hidden;}
+body{background:var(--ink);color:var(--chalk);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;padding:0 14px calc(50px + env(safe-area-inset-bottom));width:100%;}
+.wrap{max-width:640px;margin:0 auto;width:100%;}
+header{padding:30px 0 12px;}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);}
+h1{font-size:25px;font-weight:800;line-height:1.08;margin:6px 0 8px;letter-spacing:-.5px;}
+h1 span{color:var(--gold);}
+.lede{color:var(--fog);font-size:13px;}
+.tabs{display:flex;gap:6px;position:sticky;top:0;z-index:20;background:var(--ink);padding:12px 0 10px;margin-top:6px;}
+.tab{flex:1;text-align:center;padding:10px 4px;border-radius:7px;background:var(--panel2);border:1px solid var(--line);color:var(--fog);font-weight:700;font-size:12.5px;cursor:pointer;}
+.tab.on{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+.pane{display:none;}.pane.on{display:block;}
+.green-box{background:#0e2019;border-left:3px solid #1f9e6b;border-radius:0 7px 7px 0;padding:13px 14px;margin:14px 0;}
+.gold-box{background:#211d0c;border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:13px 14px;margin:14px 0;}
+.warn-box{background:#241210;border-left:3px solid var(--red);border-radius:0 7px 7px 0;padding:13px 14px;margin:14px 0;}
+.bx-t{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.green-box .bx-t{color:var(--green);}.gold-box .bx-t{color:var(--gold);}.warn-box .bx-t{color:var(--red);}
+.green-box p,.gold-box p,.warn-box p{font-size:13px;color:#cdd5dd;margin-bottom:6px;}
+.green-box p:last-child,.gold-box p:last-child,.warn-box p:last-child{margin-bottom:0;}
+b{color:var(--chalk);}
+.day{display:flex;gap:10px;align-items:center;padding:12px 2px;border-bottom:1px solid var(--line);}
+.day .dn{font-weight:800;width:42px;font-size:13px;flex-shrink:0;}
+.day .ds{flex:1;font-size:14px;font-weight:600;}
+.day .dt{font-size:11px;color:var(--fog);text-align:right;}
+.big{color:var(--gold);}.light{color:var(--blue);}.rest{color:var(--fog);}
+.rt{border:1px solid var(--line);border-radius:9px;padding:13px;margin-top:12px;}
+.rt h3{font-size:15px;font-weight:800;margin-bottom:2px;}
+.rt .rs{font-size:12px;color:var(--fog);margin-bottom:9px;}
+.ex{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--line);font-size:13px;}
+.ex:first-of-type{border-top:none;}
+.ex .en{font-weight:600;}.ex .ep{color:var(--gold);font-weight:700;white-space:nowrap;}
+.plate{display:flex;gap:6px;margin:10px 0;}
+.plate .s{flex:1;padding:9px 4px;border-radius:6px;color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:1.3;}
+ul{margin:6px 0 6px 18px;}li{font-size:13px;margin-bottom:6px;color:#cdd5dd;}
+.ms{border-left:3px solid #1f9e6b;padding:2px 0 2px 12px;margin-bottom:11px;}
+.ms .mw{font-size:10px;color:var(--fog);font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.ms .mn{font-weight:800;font-size:15px;margin:1px 0 3px;}
+.ms p{font-size:12.5px;color:var(--fog);}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--gold);display:inline-block;padding:2px 8px;border-radius:3px;margin:20px 0 4px;}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12.5px;}
+td{padding:7px 5px;border-bottom:1px solid var(--line);vertical-align:top;}
+td:first-child{font-weight:700;width:34%;}td:last-child{color:var(--fog);}
+</style></head><body><div class="wrap">
+<header><div class="eyebrow">Système quotidien · nutrition · objectif 2 mois</div>
+<h1>Plan quotidien <span>& Nutrition</span></h1>
+<p class="lede">Complément au programme · exploite ton télétravail · garantit les résultats</p></header>
+
+<div class="tabs">
+<div class="tab on" data-pane="sem">Semaine</div>
+<div class="tab" data-pane="rout">Routines</div>
+<div class="tab" data-pane="nut">Nutrition</div>
+<div class="tab" data-pane="proj">Objectifs</div>
+</div>
+
+<div class="pane on" id="pane-sem">
+<div class="green-box"><div class="bx-t">La logique</div>
+<p>Ton télétravail = l'arme de la <b>fréquence</b>. On combine 3 grosses séances (force + muscle) avec des routines courtes quotidiennes (gainage, mobilité) les jours off.</p>
+<p><b>Règle d'or :</b> les jours off sont LÉGERS, pas des mini-séances de force. C'est ça qui permet d'en faire tous les jours sans t'épuiser — récup = résultats.</p></div>
+<div style="margin-top:8px">
+<div class="day"><span class="dn">Lun</span><span class="ds big">Séance 1 — PUSH</span><span class="dt">40-50 min</span></div>
+<div class="day"><span class="dn">Mar</span><span class="ds light">Routine A — Core & Ventre plat</span><span class="dt">15-20 min</span></div>
+<div class="day"><span class="dn">Mer</span><span class="ds big">Séance 2 — PULL</span><span class="dt">40-50 min</span></div>
+<div class="day"><span class="dn">Jeu</span><span class="ds light">Routine B — Mobilité & circulation</span><span class="dt">15 min</span></div>
+<div class="day"><span class="dn">Ven</span><span class="ds big">Séance 3 — CORE & BURN</span><span class="dt">40-50 min</span></div>
+<div class="day"><span class="dn">Sam</span><span class="ds light">Routine C — Pump haut léger</span><span class="dt">20-30 min</span></div>
+<div class="day"><span class="dn">Dim</span><span class="ds rest">Repos (ou Routine B)</span><span class="dt">—</span></div>
+</div>
+<div class="gold-box"><div class="bx-t">3 min non négociables — tous les jours</div>
+<p><b>1. Stomach vacuum</b> 3-4×15s (nombril vers la colonne) — affine le tour de taille.<br><b>2. Circulation cheville gauche</b> 20-30 + jambe droite surélevée — anti-phlébite.</p>
+<p>Au réveil ou entre deux visios. 3 min, gros impact cumulé.</p></div>
+</div>
+
+<div class="pane" id="pane-rout">
+<div class="rt"><h3 style="color:var(--blue)">Routine A — Core & Ventre plat</h3><div class="rs">15-20 min · mardi · 2-3 tours</div>
+<div class="ex"><span class="en">Stomach vacuum</span><span class="ep">4×15s</span></div>
+<div class="ex"><span class="en">Hollow hold</span><span class="ep">3×25s</span></div>
+<div class="ex"><span class="en">Planche latérale gauche</span><span class="ep">3×30s</span></div>
+<div class="ex"><span class="en">Dead bug (jambe gauche)</span><span class="ep">3×8</span></div>
+<div class="ex"><span class="en">Pallof press élastique</span><span class="ep">3×10/c</span></div></div>
+<div class="rt"><h3 style="color:var(--blue)">Routine B — Mobilité & circulation</h3><div class="rs">15 min · jeudi · récup active</div>
+<div class="ex"><span class="en">Mobilité thoracique (rotations)</span><span class="ep">10/c</span></div>
+<div class="ex"><span class="en">Ouverture épaules élastique</span><span class="ep">2×15</span></div>
+<div class="ex"><span class="en">Étirement pecs / nuque</span><span class="ep">30s</span></div>
+<div class="ex"><span class="en">Circulation cheville G + contractions</span><span class="ep">2-3min</span></div>
+<div class="ex"><span class="en">Stomach vacuum</span><span class="ep">4×15s</span></div></div>
+<div class="rt"><h3 style="color:var(--blue)">Routine C — Pump haut léger</h3><div class="rs">20-30 min · samedi · charges légères, 3 tours</div>
+<div class="ex"><span class="en">Curl + Extension triceps (SS)</span><span class="ep">3×15</span></div>
+<div class="ex"><span class="en">Élévations latérales</span><span class="ep">3×15</span></div>
+<div class="ex"><span class="en">Rowing élastique</span><span class="ep">3×15</span></div>
+<div class="ex"><span class="en">Développé épaules léger</span><span class="ep">3×15</span></div>
+<div class="ex"><span class="en">Vacuum + Hollow</span><span class="ep">fin</span></div></div>
+</div>
+
+<div class="pane" id="pane-nut">
+<span class="section-label">La méthode de l'assiette</span>
+<div class="plate"><div class="s" style="background:#4caf6d;flex:2">½ Légumes<br>volume, fibres</div><div class="s" style="background:#d64550">¼ Protéines</div><div class="s" style="background:#e5a800">¼ Féculents</div></div>
+<p style="font-size:12.5px;color:var(--fog)">+ un pouce de bon gras (huile d'olive, avocat, oléagineux). Sans rien peser, cette assiette crée le bon équilibre pour perdre du gras en gardant le muscle.</p>
+<span class="section-label" style="margin-top:16px">Les 5 règles (90% du résultat)</span>
+<ul>
+<li><b>Protéines à chaque repas</b> (~150-170 g/j) — préserve le muscle pendant l'immobilisation. Œufs, poulet, poisson, skyr, légumineuses, whey.</li>
+<li><b>Volume de légumes</b> à chaque repas — remplit l'estomac pour peu de calories.</li>
+<li><b>Limite alcool, sodas/jus, grignotage sucré</b> — les calories invisibles qui gonflent le ventre.</li>
+<li><b>Portions à la baisse</b> — tu bouges moins (tendon), l'assiette doit suivre.</li>
+<li><b>2 L d'eau + s'arrêter à 80% de satiété.</b></li>
+</ul>
+<span class="section-label" style="margin-top:16px">Journée type (~1900-2100 kcal)</span>
+<table>
+<tr><td>Petit-déj</td><td>Skyr + flocons d'avoine + fruits rouges, ou 3 œufs + pain complet. Protéines dès le matin.</td></tr>
+<tr><td>Déjeuner</td><td>Gros volume légumes + poulet/poisson + riz/quinoa mesuré + huile d'olive.</td></tr>
+<tr><td>Collation</td><td>Fromage blanc + amandes, ou fruit + skyr (après séance idéalement).</td></tr>
+<tr><td>Dîner</td><td>Légumes + protéines + un peu de féculents complets. Plus léger si journée off.</td></tr>
+</table>
+<div class="green-box"><div class="bx-t">Anti-frustration</div><p>Garde <b>1-2 repas libres/semaine</b>. Un cadre imparfait tenu 6 mois bat un régime parfait tenu 10 jours.</p></div>
+</div>
+
+<div class="pane" id="pane-proj">
+<div class="ms"><div class="mw">Semaine 2</div><div class="mn">Habitudes posées</div><p>Séances sans douleur, routine quotidienne automatique. Premiers -1 à -2 kg. La force commence à monter.</p></div>
+<div class="ms"><div class="mw">Semaine 4</div><div class="mn">Ça devient visible</div><p>-2 à -3 kg, -2 à -3 cm de taille. Haut du corps plus ferme. Charges en hausse. Le miroir parle.</p></div>
+<div class="ms"><div class="mw">Semaine 6</div><div class="mn">Le cap net</div><p>-3 à -4 kg, -3 à -5 cm. Épaules et bras dessinés, ventre plus plat. Force +20-30%. On remarque autour de toi.</p></div>
+<div class="ms"><div class="mw">Semaine 8</div><div class="mn">Résultats installés</div><p>-4 à -5 kg, -4 à -6 cm possible. Haut visiblement musclé et découpé, ventre nettement réduit. Base de force + gainage solides pour la reprise course.</p></div>
+<div class="warn-box"><div class="bx-t">La condition</div><p>Ces chiffres supposent : <b>nutrition tenue</b> (le déficit, sinon le gras ne part pas), <b>régularité</b>, et <b>sommeil</b> (7-8h). Le programme est l'outil ; ces 3 piliers sont le moteur.</p></div>
+<div class="warn-box"><div class="bx-t">Rappel tendon</div><p>Tout reste sans appui jambe droite, <b>en parallèle de ta kiné (prioritaire)</b>. Fais valider à la 1re séance. Douleur/signe anormal → arrêt et avis médical.</p></div>
+</div>
+
+</div>
+<script>
+document.querySelectorAll('.tab').forEach(t=>{t.addEventListener('click',()=>{
+document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+t.classList.add('on');document.getElementById('pane-'+t.dataset.pane).classList.add('on');
+window.scrollTo({top:0,behavior:'instant'});});});
+</script></body></html>
