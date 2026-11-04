@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mon Tracker — Force & Silhouette</title>
+<style>
+  :root{--ink:#0c1014;--panel:#161c23;--panel2:#1e2630;--line:#2b343f;--fog:#8d99a7;--chalk:#f1f4f7;--gold:#e5b800;--blue:#3fa0ff;--green:#2ec38a;--red:#ff5c5c;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{overflow-x:hidden;}
+  body{background:var(--ink);color:var(--chalk);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;padding:0 14px calc(50px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased;width:100%;}
+  .wrap{max-width:640px;margin:0 auto;width:100%;}
+  header{padding:30px 0 12px;}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);}
+  h1{font-size:25px;font-weight:800;line-height:1.08;margin:6px 0 6px;letter-spacing:-.5px;}
+  h1 span{color:var(--gold);}
+  .lede{color:var(--fog);font-size:13px;}
+  .tabs{display:flex;gap:6px;position:sticky;top:0;z-index:20;background:var(--ink);padding:12px 0 10px;margin-top:6px;}
+  .tab{flex:1;text-align:center;padding:10px 4px;border-radius:7px;background:var(--panel2);border:1px solid var(--line);color:var(--fog);font-weight:700;font-size:12px;cursor:pointer;transition:.15s;}
+  .tab.on{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+  .pane{display:none;}
+  .pane.on{display:block;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px;margin-top:14px;}
+  .card h2{font-size:15px;font-weight:800;margin-bottom:3px;}
+  .card .sub{font-size:12px;color:var(--fog);margin-bottom:12px;}
+  label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--fog);margin:8px 0 3px;}
+  input,select{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--chalk);border-radius:7px;padding:10px 11px;font-size:15px;font-family:inherit;}
+  input:focus,select:focus{outline:none;border-color:var(--gold);}
+  .row{display:flex;gap:10px;}
+  .row > div{flex:1;}
+  button.add{width:100%;margin-top:13px;background:var(--gold);color:var(--ink);border:none;border-radius:8px;padding:12px;font-size:15px;font-weight:800;cursor:pointer;}
+  button.add:active{opacity:.85;}
+  .stat-row{display:flex;gap:10px;margin-top:12px;}
+  .stat{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:12px;text-align:center;}
+  .stat .v{font-size:22px;font-weight:800;}
+  .stat .v.g{color:var(--green);}
+  .stat .v.r{color:var(--red);}
+  .stat .k{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--fog);margin-top:2px;}
+  .chart-wrap{margin-top:14px;}
+  .chart-title{font-size:12px;font-weight:700;color:var(--fog);margin-bottom:4px;}
+  svg{width:100%;height:auto;display:block;background:var(--panel2);border:1px solid var(--line);border-radius:9px;}
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px;}
+  th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--fog);padding:6px 5px;border-bottom:1px solid var(--line);}
+  td{padding:8px 5px;border-bottom:1px solid var(--line);color:var(--chalk);}
+  td .del{color:var(--red);cursor:pointer;font-weight:700;font-size:16px;}
+  .empty{font-size:13px;color:var(--fog);text-align:center;padding:16px;font-style:italic;}
+  .lift-block{border-top:1px solid var(--line);padding-top:10px;margin-top:10px;}
+  .lift-block:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+  .lift-name{font-weight:700;font-size:14px;margin-bottom:4px;}
+  .foot{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);display:flex;gap:10px;}
+  .foot button{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--fog);border-radius:7px;padding:9px;font-size:12px;font-weight:700;cursor:pointer;}
+  .foot button.danger{color:var(--red);border-color:#4a2020;}
+  .note{font-size:11px;color:var(--fog);margin-top:10px;line-height:1.5;}
+  .goal{background:#211d0c;border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:11px 13px;margin-top:12px;font-size:12.5px;color:#cdd5dd;}
+  .goal b{color:var(--chalk);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Suivi de progression · objectif 2 mois</div>
+    <h1>Mon <span>Tracker</span></h1>
+    <p class="lede">Force · tour de taille · poids. Tes données restent sur cet appareil.</p>
+  </header>
+
+  <div class="tabs">
+    <div class="tab on" data-pane="mens">Silhouette</div>
+    <div class="tab" data-pane="force">Force</div>
+    <div class="tab" data-pane="tests">Tests</div>
+  </div>
+
+  <!-- SILHOUETTE -->
+  <div class="pane on" id="pane-mens">
+    <div class="card">
+      <h2>Poids &amp; tour de taille</h2>
+      <div class="sub">Même heure, à jeun le matin. 1× par semaine suffit.</div>
+      <div class="row">
+        <div><label>Date</label><input type="date" id="m-date"></div>
+        <div><label>Poids (kg)</label><input type="number" step="0.1" inputmode="decimal" id="m-poids" placeholder="90"></div>
+        <div><label>Taille (cm)</label><input type="number" step="0.5" inputmode="decimal" id="m-taille" placeholder="95"></div>
+      </div>
+      <button class="add" onclick="addMens()">Enregistrer</button>
+    </div>
+
+    <div class="stat-row" id="mens-stats"></div>
+
+    <div class="goal" id="goal-box"></div>
+
+    <div class="card">
+      <div class="chart-wrap">
+        <div class="chart-title">Poids (kg)</div>
+        <div id="chart-poids"></div>
+      </div>
+      <div class="chart-wrap" style="margin-top:16px">
+        <div class="chart-title">Tour de taille (cm)</div>
+        <div id="chart-taille"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Historique</h2>
+      <div id="mens-table"></div>
+    </div>
+  </div>
+
+  <!-- FORCE -->
+  <div class="pane" id="pane-force">
+    <div class="card">
+      <h2>Journal des charges</h2>
+      <div class="sub">Note tes séries lourdes après chaque grosse séance. Objectif : battre la fois d'avant.</div>
+      <label>Date</label><input type="date" id="f-date">
+      <label>Exercice</label>
+      <select id="f-ex">
+        <option>Développé couché</option>
+        <option>Développé incliné</option>
+        <option>Développé militaire</option>
+        <option>Rowing haltère</option>
+        <option>Curl biceps</option>
+        <option>Autre…</option>
+      </select>
+      <div class="row">
+        <div><label>Charge (kg/main)</label><input type="number" step="0.5" inputmode="decimal" id="f-charge" placeholder="14"></div>
+        <div><label>Reps</label><input type="number" inputmode="numeric" id="f-reps" placeholder="8"></div>
+        <div><label>Séries</label><input type="number" inputmode="numeric" id="f-series" placeholder="4"></div>
+      </div>
+      <button class="add" onclick="addForce()">Enregistrer</button>
+    </div>
+
+    <div class="card">
+      <h2>Progression par exercice</h2>
+      <div id="force-blocks"></div>
+    </div>
+  </div>
+
+  <!-- TESTS -->
+  <div class="pane" id="pane-tests">
+    <div class="card">
+      <h2>Benchmarks</h2>
+      <div class="sub">À mesurer S0, S3, S6, S9. Compare pour voir la progression.</div>
+      <label>Repère</label>
+      <select id="t-label">
+        <option>S0 — Départ</option>
+        <option>S3</option>
+        <option>S6</option>
+        <option>S9</option>
+      </select>
+      <div class="row">
+        <div><label>Dév. couché ×8 (kg)</label><input type="number" step="0.5" inputmode="decimal" id="t-dc" placeholder="14"></div>
+        <div><label>Planche (s)</label><input type="number" inputmode="numeric" id="t-planche" placeholder="45"></div>
+      </div>
+      <div class="row">
+        <div><label>Hollow (s)</label><input type="number" inputmode="numeric" id="t-hollow" placeholder="25"></div>
+        <div><label>Tour taille (cm)</label><input type="number" step="0.5" inputmode="decimal" id="t-taille" placeholder="95"></div>
+      </div>
+      <button class="add" onclick="addTest()">Enregistrer</button>
+    </div>
+    <div class="card">
+      <h2>Tes tests</h2>
+      <div id="tests-table"></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <button onclick="exportData()">Exporter mes données</button>
+    <button class="danger" onclick="resetData()">Tout effacer</button>
+  </div>
+  <p class="note">Tes données sont stockées uniquement dans ce navigateur, sur cet appareil (rien n'est envoyé nulle part). Si tu ouvres le tracker sur un autre appareil, il repart vide. Pense à « Exporter » de temps en temps pour garder une copie.</p>
+</div>
+
+<script>
+const LS = 'tracker_cedric_v1';
+let DB = load();
+
+function load(){
+  try { return JSON.parse(localStorage.getItem(LS)) || {mens:[],force:[],tests:[]}; }
+  catch(e){ return {mens:[],force:[],tests:[]}; }
+}
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(DB)); }catch(e){ alert('Sauvegarde impossible (mode privé ?).'); } }
+function today(){ return new Date().toISOString().slice(0,10); }
+function fmtD(d){ const p=d.split('-'); return p[2]+'/'+p[1]; }
+
+// init date fields
+['m-date','f-date'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=today(); });
+
+// ---------- MENSURATIONS ----------
+function addMens(){
+  const date=document.getElementById('m-date').value;
+  const poids=parseFloat(document.getElementById('m-poids').value);
+  const taille=parseFloat(document.getElementById('m-taille').value);
+  if(!date || (isNaN(poids)&&isNaN(taille))){ alert('Entre au moins une date + un poids ou un tour de taille.'); return; }
+  DB.mens.push({date, poids:isNaN(poids)?null:poids, taille:isNaN(taille)?null:taille});
+  DB.mens.sort((a,b)=>a.date.localeCompare(b.date));
+  save(); document.getElementById('m-poids').value=''; document.getElementById('m-taille').value='';
+  renderMens();
+}
+function delMens(i){ DB.mens.splice(i,1); save(); renderMens(); }
+
+function renderMens(){
+  const m=DB.mens;
+  // stats
+  const sc=document.getElementById('mens-stats');
+  if(m.length){
+    const first=m[0], last=m[m.length-1];
+    const dP = (last.poids!=null&&first.poids!=null)?(last.poids-first.poids):null;
+    const dT = (last.taille!=null&&first.taille!=null)?(last.taille-first.taille):null;
+    sc.innerHTML =
+      `<div class="stat"><div class="v">${last.poids!=null?last.poids:'—'}</div><div class="k">Poids actuel</div></div>`+
+      `<div class="stat"><div class="v ${dP<0?'g':dP>0?'r':''}">${dP!=null?(dP>0?'+':'')+dP.toFixed(1):'—'}</div><div class="k">Δ poids (kg)</div></div>`+
+      `<div class="stat"><div class="v ${dT<0?'g':dT>0?'r':''}">${dT!=null?(dT>0?'+':'')+dT.toFixed(1):'—'}</div><div class="k">Δ taille (cm)</div></div>`;
+  } else sc.innerHTML='';
+  // goal
+  const gb=document.getElementById('goal-box');
+  if(m.length && m[m.length-1].poids!=null){
+    const p=m[m.length-1].poids;
+    if(p>85) gb.innerHTML=`<b>Objectif poids :</b> 82-85 kg. Il te reste ~${(p-85).toFixed(1)} à ${(p-82).toFixed(1)} kg. À ~0,5 kg/sem, compte ${Math.ceil((p-85)/0.5)} à ${Math.ceil((p-82)/0.5)} semaines. Reste dans le déficit, tu y es.`;
+    else if(p>=82) gb.innerHTML=`<b>Dans la cible !</b> Tu es entre 82 et 85 kg. Maintenant on stabilise et on continue à dessiner le muscle.`;
+    else gb.innerHTML=`<b>Sous la cible.</b> Pense à ré-augmenter un peu les portions pour te stabiliser et préserver le muscle.`;
+  } else gb.innerHTML=`<b>Astuce :</b> entre ton poids et ton tour de taille chaque semaine. C'est la tendance sur 3 semaines qui compte, pas le chiffre du jour.`;
+  // charts
+  drawChart('chart-poids', m.filter(x=>x.poids!=null).map(x=>({d:x.date,v:x.poids})), '#e5b800');
+  drawChart('chart-taille', m.filter(x=>x.taille!=null).map(x=>({d:x.date,v:x.taille})), '#3fa0ff');
+  // table
+  const t=document.getElementById('mens-table');
+  if(!m.length){ t.innerHTML='<div class="empty">Aucune mesure. Enregistre ta première ci-dessus.</div>'; return; }
+  let h='<table><tr><th>Date</th><th>Poids</th><th>Taille</th><th></th></tr>';
+  m.slice().reverse().forEach((x,ri)=>{ const i=m.length-1-ri;
+    h+=`<tr><td>${fmtD(x.date)}</td><td>${x.poids!=null?x.poids+' kg':'—'}</td><td>${x.taille!=null?x.taille+' cm':'—'}</td><td><span class="del" onclick="delMens(${i})">×</span></td></tr>`; });
+  h+='</table>'; t.innerHTML=h;
+}
+
+// ---------- CHART (SVG line) ----------
+function drawChart(id, data, color){
+  const box=document.getElementById(id);
+  const W=600,H=180,pad=32;
+  if(data.length<1){ box.innerHTML=`<svg viewBox="0 0 ${W} ${H}"><text x="${W/2}" y="${H/2}" fill="#8d99a7" font-size="13" text-anchor="middle">Pas encore de données</text></svg>`; return; }
+  const vals=data.map(d=>d.v);
+  let min=Math.min(...vals), max=Math.max(...vals);
+  if(min===max){ min-=1; max+=1; }
+  const rng=max-min;
+  const n=data.length;
+  const x=i=> n===1? W/2 : pad + i*(W-2*pad)/(n-1);
+  const y=v=> pad + (H-2*pad)*(1-(v-min)/rng);
+  let pts=data.map((d,i)=>`${x(i)},${y(d.v)}`).join(' ');
+  let dots=data.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d.v)}" r="3.5" fill="${color}"/>`).join('');
+  // labels first/last value
+  const lblFirst=`<text x="${x(0)}" y="${y(data[0].v)-8}" fill="#f1f4f7" font-size="12" text-anchor="middle">${data[0].v}</text>`;
+  const lblLast= n>1?`<text x="${x(n-1)}" y="${y(data[n-1].v)-8}" fill="${color}" font-size="12" text-anchor="middle" font-weight="bold">${data[n-1].v}</text>`:'';
+  const dateFirst=`<text x="${x(0)}" y="${H-10}" fill="#8d99a7" font-size="10" text-anchor="middle">${fmtD(data[0].d)}</text>`;
+  const dateLast= n>1?`<text x="${x(n-1)}" y="${H-10}" fill="#8d99a7" font-size="10" text-anchor="middle">${fmtD(data[n-1].d)}</text>`:'';
+  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}">
+    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linejoin="round"/>
+    ${dots}${lblFirst}${lblLast}${dateFirst}${dateLast}</svg>`;
+}
+
+// ---------- FORCE ----------
+function addForce(){
+  let ex=document.getElementById('f-ex').value;
+  if(ex==='Autre…'){ ex=prompt('Nom de l\'exercice ?'); if(!ex) return; }
+  const date=document.getElementById('f-date').value;
+  const charge=parseFloat(document.getElementById('f-charge').value);
+  const reps=parseInt(document.getElementById('f-reps').value);
+  const series=parseInt(document.getElementById('f-series').value)||null;
+  if(!date||isNaN(charge)||isNaN(reps)){ alert('Date, charge et reps sont requis.'); return; }
+  DB.force.push({date,ex,charge,reps,series});
+  DB.force.sort((a,b)=>a.date.localeCompare(b.date));
+  save();
+  document.getElementById('f-charge').value=''; document.getElementById('f-reps').value=''; document.getElementById('f-series').value='';
+  renderForce();
+}
+function delForce(idx){ DB.force.splice(idx,1); save(); renderForce(); }
+
+function renderForce(){
+  const box=document.getElementById('force-blocks');
+  if(!DB.force.length){ box.innerHTML='<div class="empty">Aucune donnée. Note ta première série ci-dessus.</div>'; return; }
+  const byEx={};
+  DB.force.forEach((e,i)=>{ (byEx[e.ex]=byEx[e.ex]||[]).push({...e,_i:i}); });
+  let h='';
+  Object.keys(byEx).forEach(ex=>{
+    const arr=byEx[ex];
+    const first=arr[0], last=arr[arr.length-1];
+    const prog=last.charge-first.charge;
+    h+=`<div class="lift-block"><div class="lift-name">${ex} ${prog>0?`<span style="color:var(--green);font-size:12px">+${prog} kg</span>`:''}</div>`;
+    h+='<table><tr><th>Date</th><th>Charge</th><th>Reps</th><th></th></tr>';
+    arr.slice().reverse().forEach(e=>{
+      h+=`<tr><td>${fmtD(e.date)}</td><td>${e.charge} kg${e.series?' ×'+e.series:''}</td><td>${e.reps}</td><td><span class="del" onclick="delForce(${e._i})">×</span></td></tr>`;
+    });
+    h+='</table></div>';
+  });
+  box.innerHTML=h;
+}
+
+// ---------- TESTS ----------
+function addTest(){
+  const label=document.getElementById('t-label').value;
+  const dc=parseFloat(document.getElementById('t-dc').value);
+  const planche=parseInt(document.getElementById('t-planche').value);
+  const hollow=parseInt(document.getElementById('t-hollow').value);
+  const taille=parseFloat(document.getElementById('t-taille').value);
+  DB.tests=DB.tests.filter(t=>t.label!==label); // one per label
+  DB.tests.push({label, dc:isNaN(dc)?null:dc, planche:isNaN(planche)?null:planche, hollow:isNaN(hollow)?null:hollow, taille:isNaN(taille)?null:taille});
+  const order={'S0 — Départ':0,'S3':3,'S6':6,'S9':9};
+  DB.tests.sort((a,b)=>(order[a.label]??99)-(order[b.label]??99));
+  save();
+  ['t-dc','t-planche','t-hollow','t-taille'].forEach(id=>document.getElementById(id).value='');
+  renderTests();
+}
+function delTest(i){ DB.tests.splice(i,1); save(); renderTests(); }
+function renderTests(){
+  const box=document.getElementById('tests-table');
+  if(!DB.tests.length){ box.innerHTML='<div class="empty">Aucun test. Fais ton test de départ (S0) et note-le.</div>'; return; }
+  let h='<table><tr><th>Test</th><th>Dév.×8</th><th>Planche</th><th>Hollow</th><th>Taille</th><th></th></tr>';
+  DB.tests.forEach((t,i)=>{
+    h+=`<tr><td><b>${t.label.replace(' — Départ','')}</b></td><td>${t.dc!=null?t.dc+' kg':'—'}</td><td>${t.planche!=null?t.planche+'s':'—'}</td><td>${t.hollow!=null?t.hollow+'s':'—'}</td><td>${t.taille!=null?t.taille+' cm':'—'}</td><td><span class="del" onclick="delTest(${i})">×</span></td></tr>`;
+  });
+  h+='</table>'; box.innerHTML=h;
+}
+
+// ---------- UTILS ----------
+function exportData(){
+  const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='mon-suivi-'+today()+'.json'; a.click();
+}
+function resetData(){
+  if(confirm('Effacer TOUTES tes données ? Cette action est définitive.')){ DB={mens:[],force:[],tests:[]}; save(); renderAll(); }
+}
+function renderAll(){ renderMens(); renderForce(); renderTests(); }
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    document.getElementById('pane-'+t.dataset.pane).classList.add('on');
+  });
+});
+
+renderAll();
+</script>
+</body>
+</html>

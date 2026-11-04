@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Programme complet — corps entier</title>
+<style>
+:root{--ink:#0c1014;--panel:#161c23;--panel2:#1e2630;--line:#2b343f;--fog:#8d99a7;--chalk:#f1f4f7;--gold:#e5b800;--blue:#3fa0ff;--green:#2ec38a;--red:#ff5c5c;--purple:#b07cff;}
+*{margin:0;padding:0;box-sizing:border-box;}html,body{overflow-x:hidden;}
+body{background:var(--ink);color:var(--chalk);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;padding:0 14px calc(50px + env(safe-area-inset-bottom));width:100%;}
+.wrap{max-width:640px;margin:0 auto;width:100%;}
+header{padding:28px 0 12px;}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);}
+h1{font-size:25px;font-weight:800;line-height:1.08;margin:6px 0 8px;letter-spacing:-.5px;}
+h1 span{color:var(--gold);}
+.lede{color:var(--fog);font-size:13px;}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.fact{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:7px 11px;flex:1;min-width:140px;}
+.fact .k{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--fog);font-weight:700;}
+.fact .v{font-size:12.5px;font-weight:600;margin-top:1px;}
+.warn-box{background:#241210;border-left:3px solid var(--red);border-radius:0 7px 7px 0;padding:13px 14px;margin:14px 0;}
+.warn-box .wt{color:var(--red);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.warn-box p{font-size:13px;color:#cdd5dd;margin-bottom:6px;}.warn-box p:last-child{margin-bottom:0;}
+.warn-box b{color:var(--chalk);}
+.green-box{background:#0e2019;border-left:3px solid var(--green);border-radius:0 7px 7px 0;padding:13px 14px;margin:14px 0;}
+.green-box .wt{color:var(--green);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.green-box p{font-size:13px;color:#cdd5dd;}.green-box b{color:var(--chalk);}
+.howto{font-size:13px;color:var(--fog);}
+.howto b{color:var(--chalk);}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--gold);display:inline-block;padding:2px 8px;border-radius:3px;margin:20px 0 6px;}
+.rot{display:flex;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:13px;}
+.rot .rn{font-weight:800;width:92px;flex-shrink:0;color:var(--chalk);}
+.rot .rd{flex:1;color:var(--fog);}
+.tabs{display:flex;gap:7px;position:sticky;top:0;z-index:20;background:var(--ink);padding:12px 0 10px;margin-top:8px;}
+.tab{flex:1;text-align:center;padding:11px 5px;border-radius:7px;background:var(--panel2);border:1px solid var(--line);color:var(--fog);font-weight:700;font-size:12.5px;cursor:pointer;}
+.tab.on{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+.tab small{display:block;font-size:9px;font-weight:600;opacity:.85;margin-top:1px;}
+.pane{display:none;}.pane.on{display:block;}
+.pane-intro{font-size:12.5px;color:var(--fog);padding:4px 2px 4px;}
+.xc{border-bottom:1px solid var(--line);padding:12px 2px;}
+.xc:last-child{border-bottom:none;}
+.xc-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+.xc-name{font-weight:700;font-size:14.5px;line-height:1.25;}
+.xc-p{font-weight:800;font-size:13px;color:var(--gold);white-space:nowrap;text-align:right;}
+.xc-r{font-size:10px;color:var(--fog);font-weight:600;}
+.xc-cue{font-size:12.5px;color:var(--fog);margin-top:4px;line-height:1.5;}
+.xc-cue b{color:#cdd5dd;}
+.xc-charge{display:inline-block;font-size:11px;font-weight:700;color:var(--ink);background:#fff1b8;border-radius:4px;padding:2px 8px;margin-top:6px;}
+.xc-video{display:inline-flex;gap:5px;font-size:12px;font-weight:600;color:var(--blue);text-decoration:none;margin-top:8px;margin-left:6px;border:1px solid var(--line);background:var(--panel2);padding:4px 9px;border-radius:5px;}
+.ss{display:inline-block;font-size:9px;font-weight:800;color:var(--ink);background:var(--green);border-radius:3px;padding:1px 5px;margin-right:5px;vertical-align:middle;}
+.tgt{display:inline-block;font-size:9px;font-weight:700;color:#d9c9ff;background:#2a2140;border-radius:3px;padding:1px 6px;margin-left:5px;vertical-align:middle;}
+</style></head><body><div class="wrap">
+<header><div class="eyebrow">Corps entier · reprise d'appui · intermédiaire</div>
+<h1>Programme <span>complet</span></h1>
+<p class="lede">Fessiers · jambes · dos · pecs/bras · tronc — tendon d'Achille protégé</p>
+<div class="facts">
+<div class="fact"><div class="k">Structure</div><div class="v">3 séances A/B/C</div></div>
+<div class="fact"><div class="k">Durée</div><div class="v">40-50 min</div></div>
+<div class="fact"><div class="k">Socle</div><div class="v">Gainage chaque séance</div></div>
+</div></header>
+
+<div class="warn-box"><div class="wt">⚠ Sécurité tendon</div>
+<p><b>Talon droit ancré</b> sur tous les mouvements jambes. Descends seulement tant que ça ne tire pas. <b>Zéro mollet</b>, pas de montée sur pointe.</p>
+<p><b>Squat & fente</b> : genou pas au-delà des orteils, amplitude partielle OK. <b>Fentes : recul jambe GAUCHE uniquement.</b> Charges modérées. <b>Kiné valide.</b></p></div>
+
+<span class="section-label">Rotation</span>
+<div class="rot"><span class="rn">A — Bas</span><span class="rd">Fessiers · jambes · bas du dos + gainage</span></div>
+<div class="rot"><span class="rn">B — Haut</span><span class="rd">Dos · pecs · épaules · bras + gainage</span></div>
+<div class="rot"><span class="rn">C — Full</span><span class="rd">Rappel corps entier + gros bloc tronc</span></div>
+<p class="howto" style="margin-top:8px"><b>2-3 séances/sem</b>, non consécutives (Lun A · Mer B · Ven C). Si 2 : garde A+B, alterne C. Jamais de jambes lourdes (A) la veille d'une sortie course. 5 min d'échauffement avant, gainage à la fin.</p>
+
+<div class="green-box"><div class="wt">Fessiers — ton nouveau focus</div>
+<p>Travaillés sur <b>presque tout le bas du corps</b> : RDL, squat, fentes, hip thrust ×2, abductions. Lourd en séance A (force), congestion en séance C. Le groupe le mieux couvert — parfait aussi pour la course.</p></div>
+
+<div class="tabs">
+<div class="tab on" data-pane="A">A · Bas<small>Fessiers/jambes</small></div>
+<div class="tab" data-pane="B">B · Haut<small>Dos/pecs/bras</small></div>
+<div class="tab" data-pane="C">C · Full<small>+ gainage</small></div>
+</div>
+
+<div class="pane on" id="pane-A"><p class="pane-intro">Supersets notés SS. 2-3 tours selon le temps. Talon droit ancré partout.</p><div id="b-A"></div></div>
+<div class="pane" id="pane-B"><p class="pane-intro">Supersets notés SS. 3 tours. Jambe droite reposée, pas de poussée sur le pied droit.</p><div id="b-B"></div></div>
+<div class="pane" id="pane-C"><p class="pane-intro">Rappel léger de tous les groupes + gros bloc gainage. Charges légères, séries longues, congestion.</p><div id="b-C"></div></div>
+
+<div class="green-box"><div class="wt">Couverture — tu as tout</div>
+<p><b>Fessiers</b> : RDL, squat, fentes, hip thrust×2, abductions. <b>Jambes</b> : squat, fentes, RDL. <b>Dos+lombaires</b> : rowing, tirage, RDL, bird-dog, hip thrust. <b>Pecs/bras</b> : développés, pompes, curls, triceps. <b>Tronc/gainage</b> : hollow, planche RKC, Pallof, vacuum, dead bug (chaque séance).</p></div>
+
+<div class="warn-box"><div class="wt">Avertissement</div><p>Programme adapté à ta convalescence. Pas un avis médical. Fais valider par ta kiné, surtout le bloc jambes. Douleur tendon/mollet/dos → arrête l'exercice.</p></div>
+
+</div>
+<script>
+const V=q=>"https://www.youtube.com/results?search_query="+encodeURIComponent(q);
+const DATA={
+A:[
+ {n:"Soulevé de terre roumain (RDL)",t:"fessiers·ischios·dos",p:"3 × 10",r:"75s",c:"8,5 → 14 kg / main",v:"soulevé de terre roumain haltères RDL technique",cue:"Jambes quasi tendues, fessiers en arrière, dos plat. À mi-tibia tant que le mollet ne tire pas. Pilier fessiers + bas du dos."},
+ {n:"Squat partiel (goblet)",t:"fessiers·quadris",p:"3 × 12",r:"75s",c:"1 haltère · 14 → 19,5 kg",v:"goblet squat technique",cue:"Haltère contre la poitrine, fessiers en arrière, genou dans l'axe, talons ancrés."},
+ {n:"Fente arrière (recul jambe GAUCHE)",t:"fessiers·quadris",p:"3 × 10",r:"60s",c:"poids du corps → 8,5 kg/main",v:"fente arrière reverse lunge haltères technique",cue:"Jambe droite devant fixe, recule la gauche. Talon droit ancré, genou droit stable."},
+ {n:"Hip thrust lesté (épaules swiss ball)",t:"FESSIERS",p:"3 × 12",ss:"SS",c:"haltère · 14 → 19,5 kg",v:"hip thrust swiss ball lesté technique",cue:"Épaules sur le ballon, monte le bassin, serre fort 1s en haut. L'exercice fessiers n°1. Talons ancrés."},
+ {n:"Abduction hanche élastique",t:"moyen fessier",p:"3 × 15",r:"60s",ss:"SS",c:"élastique 10 → 20 kg",v:"abduction hanche élastique moyen fessier",cue:"Élastique aux genoux, écarte contre résistance. Moyen fessier = stabilité bassin + galbe."},
+ {n:"Bird-dog lent",t:"lombaires·gainage",p:"3 × 8/côté",r:"45s",v:"bird dog exercice gainage technique",cue:"Bras + jambe opposés, dos plat. Le renfort lombaire-clé pour ton L4-L5."},
+],
+B:[
+ {n:"Développé couché haltères (banc)",t:"pecs·triceps",p:"4 × 8",r:"90s",c:"14 → 19,5 kg / main",v:"développé couché haltères technique",cue:"Pied gauche au sol, jambe droite allongée. Presse vers le plafond, contrôle la descente."},
+ {n:"Rowing haltère 1 bras (appui banc)",t:"dos·biceps",p:"4 × 10/bras",r:"75s",c:"14 → 19,5 kg / main",v:"rowing haltère un bras appui banc",cue:"Genou + main sur le banc, dos plat, tire au bassin, serre l'omoplate. Poignet neutre (coude)."},
+ {n:"Développé incliné OU militaire assis",t:"épaules·pecs haut",p:"3 × 10",r:"75s",c:"8,5 → 14 kg / main",v:"développé incliné haltères technique",cue:"Alterne d'une séance à l'autre. Gaine le tronc, ne cambre pas."},
+ {n:"Tirage élastique assis (row)",t:"dos·posture",p:"3 × 12",r:"60s",c:"élastique 20 → 30 kg",v:"seated band row rowing élastique assis",cue:"Ancré devant, assis sur le banc, tire au ventre, serre les omoplates."},
+ {n:"Curl biceps",t:"biceps",p:"3 × 12",ss:"SS",c:"8,5 → 14 kg / main",cue:"Coudes fixes, contrôle la descente."},
+ {n:"Extension triceps au-dessus de la tête",t:"triceps",p:"3 × 12",r:"60s",ss:"SS",c:"8,5 → 14 kg (1 haltère)",cue:"Un haltère à deux mains derrière la tête, tends les bras. Coudes serrés."},
+ {n:"Face pull + Hollow hold",t:"épaules·gainage",p:"3 × 15 + 25s",r:"45s",c:"élastique 10 kg",cue:"Face pull (posture) puis hollow hold (gainage) pour finir."},
+],
+C:[
+ {n:"Hip thrust bipodal",t:"FESSIERS",p:"3 × 15",ss:"SS",c:"haltère sur bassin",cue:"Congestion fessiers, serre fort en haut. Talons ancrés."},
+ {n:"Pompes (ou pieds surélevés)",t:"pecs·triceps·gainage",p:"3 × max",r:"60s",ss:"SS",cue:"Corps gainé. Sur les genoux si la forme casse."},
+ {n:"Rowing élastique",t:"dos",p:"3 × 15",ss:"SS",c:"élastique 20 → 30 kg",cue:"Équilibre les pompes, serre les omoplates."},
+ {n:"Squat partiel poids du corps",t:"jambes·fessiers",p:"3 × 15",r:"60s",ss:"SS",cue:"Rythme régulier, talons ancrés, amplitude maîtrisée."},
+ {n:"Stomach vacuum",t:"transverse·taille",p:"4 × 15s",r:"30s",v:"stomach vacuum exercice ventre plat",cue:"Rentre le ventre au max. L'arme du tour de taille."},
+ {n:"Planche RKC",t:"gainage",p:"3 × 25s",ss:"SS",v:"RKC plank gainage sous tension",cue:"Tout contracté à fond. 25s valent 60s de planche molle."},
+ {n:"Pallof press élastique",t:"anti-rotation·taille",p:"3 × 10/côté",r:"45s",ss:"SS",c:"élastique 20 kg",v:"pallof press élastique anti rotation",cue:"Résiste à la rotation. Sculpte la taille."},
+ {n:"Gainage latéral + dead bug",t:"obliques·lombaires",p:"3 × 30s + 8",r:"45s",cue:"Latéral (côté gauche au sol) puis dead bug jambe gauche."},
+],
+};
+function build(key){
+ let h='';
+ DATA[key].forEach(e=>{
+  const r=(e.r&&e.r!=="SS")?`<div class="xc-r">repos ${e.r}</div>`:'';
+  const ss=e.ss?`<span class="ss">${e.ss}</span>`:'';
+  const tgt=e.t?`<span class="tgt">${e.t}</span>`:'';
+  h+=`<div class="xc"><div class="xc-top"><div class="xc-name">${ss}${e.n}${tgt}</div><div style="text-align:right"><div class="xc-p">${e.p}</div>${r}</div></div>
+   <div class="xc-cue">${e.cue}</div>
+   <div>${e.c?`<span class="xc-charge">${e.c}</span>`:''}${e.v?`<a class="xc-video" href="${V(e.v)}" target="_blank" rel="noopener">▶ Vidéo</a>`:''}</div></div>`;
+ });
+ document.getElementById('b-'+key).innerHTML=h;
+}
+['A','B','C'].forEach(build);
+document.querySelectorAll('.tab').forEach(t=>{t.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+ document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+ t.classList.add('on');document.getElementById('pane-'+t.dataset.pane).classList.add('on');
+ window.scrollTo({top:0,behavior:'instant'});});});
+</script></body></html>

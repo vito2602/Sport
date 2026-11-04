@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Routine quotidienne</title>
+<style>
+:root{--ink:#0c1014;--panel:#161c23;--panel2:#1e2630;--line:#2b343f;--fog:#8d99a7;--chalk:#f1f4f7;--blue:#3fa0ff;--gold:#e5b800;--green:#2ec38a;--red:#ff5c5c;}
+*{margin:0;padding:0;box-sizing:border-box;}html,body{overflow-x:hidden;}
+body{background:var(--ink);color:var(--chalk);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;padding:0 14px calc(50px + env(safe-area-inset-bottom));width:100%;}
+.wrap{max-width:640px;margin:0 auto;width:100%;}
+header{padding:30px 0 12px;}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);}
+h1{font-size:25px;font-weight:800;line-height:1.08;margin:6px 0 8px;letter-spacing:-.5px;}
+h1 span{color:var(--blue);}
+.lede{color:var(--fog);font-size:13px;}
+.blue-box{background:#0e1a2a;border-left:3px solid var(--blue);border-radius:0 7px 7px 0;padding:13px 14px;margin:14px 0;}
+.gold-box{background:#211d0c;border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:13px 14px;margin:14px 0;}
+.warn-box{background:#241210;border-left:3px solid var(--red);border-radius:0 7px 7px 0;padding:13px 14px;margin:14px 0;}
+.bx-t{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.blue-box .bx-t{color:var(--blue);}.gold-box .bx-t{color:var(--gold);}.warn-box .bx-t{color:var(--red);}
+.blue-box p,.gold-box p,.warn-box p{font-size:13px;color:#cdd5dd;margin-bottom:6px;}
+.blue-box p:last-child,.gold-box p:last-child,.warn-box p:last-child{margin-bottom:0;}
+b{color:var(--chalk);}
+.tabs{display:flex;gap:8px;position:sticky;top:0;z-index:20;background:var(--ink);padding:12px 0 10px;margin-top:6px;}
+.tab{flex:1;text-align:center;padding:11px 6px;border-radius:7px;background:var(--panel2);border:1px solid var(--line);color:var(--fog);font-weight:700;font-size:13px;cursor:pointer;}
+.tab.on{background:var(--blue);color:var(--ink);border-color:var(--blue);}
+.tab small{display:block;font-size:10px;font-weight:600;opacity:.85;margin-top:1px;}
+.pane{display:none;}.pane.on{display:block;}
+.pane-intro{font-size:12.5px;color:var(--fog);padding:4px 2px 4px;}
+.blk-h{font-size:15px;font-weight:800;margin:16px 0 2px;}
+.blk-s{font-size:11.5px;color:var(--fog);margin-bottom:6px;}
+.xc{border-bottom:1px solid var(--line);padding:12px 2px;}
+.xc:last-child{border-bottom:none;}
+.xc-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+.xc-name{font-weight:700;font-size:14.5px;line-height:1.25;}
+.xc-p{font-weight:800;font-size:13px;color:var(--blue);white-space:nowrap;text-align:right;}
+.xc-cue{font-size:12.5px;color:var(--fog);margin-top:4px;line-height:1.5;}
+.xc-cue b{color:#cdd5dd;}
+.xc-charge{display:inline-block;font-size:11px;font-weight:700;color:var(--ink);background:#bfdbfe;border-radius:4px;padding:2px 8px;margin-top:6px;}
+.xc-video{display:inline-flex;gap:5px;font-size:12px;font-weight:600;color:var(--blue);text-decoration:none;margin-top:8px;margin-left:6px;border:1px solid var(--line);background:var(--panel2);padding:4px 9px;border-radius:5px;}
+.ss{display:inline-block;font-size:9px;font-weight:800;color:var(--ink);background:var(--green);border-radius:3px;padding:1px 5px;margin-right:5px;vertical-align:middle;}
+</style></head><body><div class="wrap">
+<header><div class="eyebrow">Une routine · deux intensités · tous les jours</div>
+<h1>Routine <span>quotidienne</span></h1>
+<p class="lede">Gainage costaud + mobilité/posture · convalescence Achille (sans appui)</p></header>
+
+<div class="blue-box"><div class="bx-t">Comment ça marche</div>
+<p><b>Tu la fais tous les jours</b>, son ampleur s'adapte :</p>
+<p>• <b>Jour de grosse séance</b> → seulement le <b>NOYAU</b> (3-5 min). Ta séance a déjà tapé.<br>• <b>Jour off</b> → la <b>VERSION COMPLÈTE</b> (15-20 min), dense.</p>
+<p><b>Tu peux sauter tout ou partie</b> si tu estimes en avoir assez fait. Le seul truc à garder un jour « flemme » : le noyau de 3 min.</p></div>
+
+<div class="warn-box"><div class="bx-t">Rappel tendon</div><p>Aucun appui ni sollicitation de la jambe droite. Tout au sol ou debout sur la jambe gauche. Accompagne ta kiné (prioritaire) — fais valider.</p></div>
+
+<div class="tabs">
+<div class="tab on" data-pane="noyau">NOYAU<small>3-5 min · tous les jours</small></div>
+<div class="tab" data-pane="complete">COMPLÈTE<small>15-20 min · jours off</small></div>
+</div>
+
+<div class="pane on" id="pane-noyau">
+<p class="pane-intro">Les non-négociables. Même jours de séance, même sans envie. C'est le cumul quotidien qui fait le tour de taille.</p>
+<div id="b-noyau"></div>
+</div>
+
+<div class="pane" id="pane-complete">
+<p class="pane-intro">Commence par le NOYAU, puis enchaîne. Dense : gainage sous tension (supersets) + mobilité active. Repos courts 30-45s.</p>
+<div id="b-complete"></div>
+<div class="gold-box"><div class="bx-t">Pourquoi c'est plus intense (sans casser la récup)</div>
+<p>Fini les tenues statiques molles : ici du <b>gainage sous tension</b> (RKC, hollow rock, dead bug lesté, Pallof lourd, latéral avec rotation) + charge élastique réelle. Bien plus exigeant pour le tronc. <b>Mais ça reste de la récup active</b> : pas de charge lourde articulaire, pas de fatigue qui empièterait sur tes 3 grosses séances. Le bon curseur pour un intermédiaire.</p></div>
+</div>
+
+<div class="warn-box"><div class="bx-t">Avertissement</div><p>Routine gainage/mobilité adaptée pour ne pas solliciter le tendon droit. Pas un avis médical. Fais valider par ta kiné. Douleur au tendon, au bas du dos ou signe anormal → arrête l'exercice et demande un avis.</p></div>
+
+</div>
+<script>
+const V=q=>"https://www.youtube.com/results?search_query="+encodeURIComponent(q);
+const DATA={
+noyau:[
+ {n:"Stomach vacuum",p:"4 × 15s",v:"stomach vacuum exercice transverse ventre plat",cue:"Rentre le ventre au max (nombril vers la colonne), tiens en respirant. L'arme n°1 du tour de taille."},
+ {n:"Gainage planche RKC (sous tension)",p:"2 × 20s",v:"RKC plank gainage sous tension technique",cue:"Planche avant-bras mais <b>tout contracté à fond</b> (fessiers, abdos, quadris serrés). 20s de RKC valent 60s de planche molle. Si le tendon droit tire → planche latérale gauche."},
+ {n:"Circulation cheville gauche",p:"20-30",cue:"Pompes de cheville gauche + jambe droite surélevée un moment. Anti-phlébite."},
+],
+complete:[
+ {h:"Bloc 1 — Gainage costaud",s:"2 tours, repos 30-45s entre tours"},
+ {n:"Hollow rock",p:"3 × 20",ss:"SS1",v:"hollow rock exercice gainage",cue:"Position hollow + bascule contrôlée d'avant en arrière. Bien plus dur qu'un hold. Jambe droite passive (repliée, sans tension cheville)."},
+ {n:"Pallof press élastique (lourd)",p:"3 × 10/côté",ss:"SS1",c:"élastique 20 → 30 kg",v:"pallof press élastique anti rotation",cue:"Enchaîné après le hollow rock. Résiste fort à la rotation, élastique tendu. Taille sculptée + tronc solide."},
+ {n:"Gainage latéral gauche + rotation",p:"3 × 10",ss:"SS2",v:"side plank rotation gainage latéral",cue:"En planche latérale gauche, passe le bras libre sous le buste puis rouvre. Obliques sous tension."},
+ {n:"Dead bug lesté (haltère léger)",p:"3 × 10",ss:"SS2",c:"3 kg en mains",v:"weighted dead bug haltère gainage",cue:"Dead bug bras chargés + jambe gauche. La charge augmente la demande anti-extension. Dos plaqué."},
+ {n:"Relevé buste swiss ball (extension)",p:"2 × 12",v:"extension lombaire swiss ball back extension",cue:"Sur le ballon face au sol (jambe droite calée sans appui cheville), extension lombaire douce. <b>Si gêne → superman lent.</b>"},
+ {n:"Hip thrust bipodal + abduction élastique",p:"2 × 15",v:"hip thrust swiss ball technique",cue:"<b>Fessiers</b> : monte le bassin, serre fort en haut, talons ancrés — puis abductions élastique aux genoux. Galbe + stabilité bassin, zéro risque tendon."},
+ {h:"Bloc 2 — Mobilité & posture",s:"en fluide, sans repos"},
+ {n:"Cat-camel (chat-chameau)",p:"10 lents",v:"cat camel chat chameau mobilité colonne",cue:"À 4 pattes, mobilise la colonne segment par segment."},
+ {n:"Rotation thoracique (thread the needle)",p:"8/côté",v:"thread the needle rotation thoracique mobilité",cue:"À 4 pattes, passe un bras sous le corps puis ouvre vers le plafond. Débloque le haut du dos."},
+ {n:"Ouverture épaules élastique (dislocations)",p:"2 × 12",c:"élastique 10 kg",v:"shoulder dislocations élastique mobilité épaule",cue:"Élastique tendu, passe-le au-dessus de la tête vers l'arrière et reviens. Mobilité + santé d'épaule."},
+ {n:"Band pull-apart lent",p:"2 × 15",c:"élastique 20 kg",cue:"Écarte l'élastique devant, serre les omoplates. Corrige les épaules enroulées."},
+ {n:"Étirement pecs + fléchisseur hanche G",p:"30s chaque",v:"étirement psoas fléchisseur hanche fente",cue:"Contre les tensions de la position assise. Hanche : fente sur la jambe gauche uniquement, sans charger la droite."},
+],
+};
+function build(key){
+ let h='';
+ DATA[key].forEach(e=>{
+  if(e.h){ h+=`<div class="blk-h">${e.h}</div><div class="blk-s">${e.s}</div>`; return; }
+  const ss=e.ss?`<span class="ss">${e.ss}</span>`:'';
+  h+=`<div class="xc"><div class="xc-top"><div class="xc-name">${ss}${e.n}</div><div class="xc-p">${e.p}</div></div>
+   <div class="xc-cue">${e.cue}</div>
+   <div>${e.c?`<span class="xc-charge">${e.c}</span>`:''}${e.v?`<a class="xc-video" href="${V(e.v)}" target="_blank" rel="noopener">▶ Vidéo</a>`:''}</div></div>`;
+ });
+ document.getElementById('b-'+key).innerHTML=h;
+}
+['noyau','complete'].forEach(build);
+document.querySelectorAll('.tab').forEach(t=>{t.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+ document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+ t.classList.add('on');document.getElementById('pane-'+t.dataset.pane).classList.add('on');
+ window.scrollTo({top:0,behavior:'instant'});});});
+</script></body></html>
